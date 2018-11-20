@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.myopenproject.esamu">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.location.gps" />
+
+    <application
+        android:name=".domain.Preferences"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <!-- Main -->
+        <activity
+            android:name=".presentation.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Sign up -->
+        <activity
+            android:name=".presentation.signup.SignUpActivity"
+            android:label="@string/signup_title"
+            android:screenOrientation="portrait" />
+
+        <!-- Home -->
+        <activity
+            android:name=".presentation.HomeActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- Emergency -->
+        <activity
+            android:name=".presentation.emergency.EmergencyActivity"
+            android:label="@string/emergency_title"
+            android:parentActivityName=".presentation.HomeActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- Camera -->
+        <activity
+            android:name=".presentation.emergency.CameraActivity"
+            android:screenOrientation="fullUser"
+            android:theme="@style/FullScreenTheme" />
+    </application>
+
+</manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/</item>
+        <item>@font/abeezee</item>
+        <item>@font/allerta</item>
+        <item>@font/amiko</item>
+        <item>@font/armata</item>
+        <item>@font/asd</item>
+        <item>@font/days_one</item>
+        <item>@font/ubuntu_medium</item>
+    </array>
+</resources>

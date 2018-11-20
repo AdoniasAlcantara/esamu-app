@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FC721D</color>
+    <color name="colorPrimaryDark">#C24200</color>
+    <color name="colorAccent">#C40202</color>
+    <color name="colorBackground">#F2F2F2</color>
+
+    <!-- Button -->
+    <color name="button_normal">#FC8236</color>
+    <color name="button_accent">#C63131</color>
+    <color name="fab_menu_normal">@color/button_accent</color>
+    <color name="fab_menu_pressed">#FC0303</color>
+    <color name="fab_item_normal">@color/button_normal</color>
+    <color name="fab_item_pressed">#fDB181</color>
+    <color name="fab_item_label">#A54D4D4D</color>
+
+    <color name="button_card_border">@color/colorPrimary</color>
+    <color name="button_card_default">#FFFFFF</color>
+    <color name="button_card_focused">#FFCBB3</color>
+    <color name="button_card_text">@color/colorPrimary</color>
+</resources>

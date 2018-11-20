@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">e-SAMU</string>
+
+    <!-- Resources are named as follows: -->
+    <!-- <WHERE>_<WHAT>_<DESCRIPTION> (eg. signup_input_name) -->
+
+    <!-- Main (splash screen)-->
+    <string name="main_title">e-SAMU</string>
+    <string name="main_button_start">Começar</string>
+
+    <!-- Sign up -->
+    <string name="signup_title">Verifique seu número</string>
+    <string name="signup_text_info">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="signup_text_fill">Preencha os campos abaixo com suas informações. O e-SAMU enviará um código SMS para verificar o número de telefone.</string>
+    <string name="signup_text_sms_sent">SMS enviado para %s. Insira o código de verificação recebido ou aguarde a detecção automática.</string>
+    <string name="signup_label_name">Nome</string>
+    <string name="signup_label_phone">Telefone</string>
+    <string name="signup_label_token">Código de verificação</string>
+    <string name="signup_button_next">Continuar</string>
+    <string name="signup_button_confirm">Concluir</string>
+    <string name="signup_text_success">Pronto!</string>
+    <string name="signup_text_unsuccessful">Não foi possível concluir o cadastro</string>
+    <string name="signup_error_invalid_phone">O número do telefone é inválido</string>
+    <string name="signup_error_sms_exceeded">A quota de SMS foi excedida</string>
+    <string name="signup_error_auth">Código de verificação incorreto</string>
+
+    <!-- Home -->
+    <string name="home_title">HomeActivity</string>
+    <string name="home_button_emergency">Emergência</string>
+    <string name="home_button_cancel">Cancelar</string>
+    <string name="home_text_info">Pressione o botão de emergência para solicitar uma ambulância.</string>
+
+    <!-- Emergency -->
+    <string name="emergency_title">Solicitar Ambulância</string>
+    <string name="emergency_button_camera">Foto/vídeo</string>
+    <string name="emergency_button_voice">Gravação de voz</string>
+    <string name="emergency_button_send">Enviar</string>
+    <string name="emergency_text_title_add_pic">Adicione uma Foto</string>
+    <string name="emergency_text_info_add_pic">Use sua câmera para adicionar uma foto à emergência.</string>
+    <string name="emergency_text_ready_title">Pronto!</string>
+    <string name="emergency_text_ready_msg">Envie a emergência.</string>
+    <string name="emergency_hint_picture">Foto de emergência</string>
+    <string name="emergency_toast_back_pressed">Pressione voltar mais uma vez para cancelar a solicitação</string>
+    <string name="emergency_dialog_sent_title">Solicitação enviada</string>
+    <string name="emergency_dialog_sent_msg">Aguarde o atendimento do SAMU</string>
+    <string name="emergency_dialog_suggest_call">Deseja iniciar uma ligação com o SAMU 192 agora?</string>
+    <string name="emergency_dialog_call_192">Discar 192</string>
+
+    <!-- Camera -->
+    <string name="camera_text_take_picture">Tire uma foto</string>
+    <string name="camera_dialog_title">Título</string>
+    <string name="camera_dialog_msg">Mensagem</string>
+
+
+    <!-- Misc -->
+
+    <!-- Dialog -->
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_yes">Sim</string>
+    <string name="dialog_no">Não</string>
+    <string name="dialog_retry">Tentar novamente</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_wait">Por favor, aguarde.</string>
+    <string name="dialog_sending">Enviando…</string>
+
+    <!-- Error -->
+    <string name="error_empty">Campo obrigatório</string>
+    <string name="error_numeric">Apenas números são permitidos</string>
+    <string name="error_numeric_min">Mínimo de %d dígitos</string>
+    <string name="error_network_title">Sem conexão</string>
+    <string name="error_network_msg">Verifique sua conexão com a Internet</string>
+    <string name="error_unavailable_title">Serviço indisponível</string>
+    <string name="error_unavailable_msg">O serviço está temporariamente indisponível</string>
+    <string name="error_unreachable_server">Não foi possível estabelecer a conexão</string>
+    <string name="error_googleplay_title">Google Play</string>
+    <string name="error_googleplay_msg">Instale a versão mais recente do Google Play Services</string>
+    <string name="error_not_implemented">Não implementado</string>
+    <string name="error_fatal">Erro faltal</string>
+
+    <!-- Phone number code by country -->
+    <string name="country_code">+55</string>
+
+</resources>

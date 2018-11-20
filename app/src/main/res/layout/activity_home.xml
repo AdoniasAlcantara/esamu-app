@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".presentation.HomeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:padding="32dp"
+        android:text="@string/home_text_info"/>
+
+    <pl.bclogic.pulsator4droid.library.PulsatorLayout
+        android:id="@+id/mainPulsator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:pulse_count="1"
+        app:pulse_duration="500"
+        app:pulse_repeat="1"
+        app:pulse_color="@color/colorAccent"
+        app:pulse_startFromScratch="false"
+        app:pulse_interpolator="Linear" />
+
+    <org.myopenproject.esamu.widget.CountDownButton
+        android:id="@+id/homeButtonEmergency"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/button_emergency"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:text="@string/home_button_emergency"
+        app:count="3"
+        app:textScaleFactor="4" />
+
+    <com.omega_r.libs.OmegaCenterIconButton
+        android:id="@+id/homeButtonCancel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="-60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_ripple"
+        android:drawableStart="@drawable/ic_cancel"
+        android:textColor="@android:color/white"
+        android:text="@string/home_button_cancel" />
+
+</RelativeLayout>

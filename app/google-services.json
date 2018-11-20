@@ -1,0 +1,143 @@
+{
+  "project_info": {
+    "project_number": "1078217955018",
+    "firebase_url": "https://esamu-218510.firebaseio.com",
+    "project_id": "esamu-218510",
+    "storage_bucket": "esamu-218510.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078217955018:android:aba86628f1142cee",
+        "android_client_info": {
+          "package_name": "myopenproject.org.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078217955018-6p8qp9npcqb1goli7nn63utl96i4ohq4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "myopenproject.org.auth",
+            "certificate_hash": "9ef9bc0f5cbeb1aeec7e349a989c09b464d89c05"
+          }
+        },
+        {
+          "client_id": "1078217955018-9dhi37mqifli7lh93oo4927db6d6ju30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCokliuV1Idi5jN7XUVY7vhqocWgGIS_w0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078217955018-9dhi37mqifli7lh93oo4927db6d6ju30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078217955018:android:b8dbd2a600d5bd65",
+        "android_client_info": {
+          "package_name": "org.myopenproject.esamu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078217955018-1psd4npa04qotatmi2tnsbjihq3hlt97.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.myopenproject.esamu",
+            "certificate_hash": "2bb705039198748978d443768340d47379f359b9"
+          }
+        },
+        {
+          "client_id": "1078217955018-9dhi37mqifli7lh93oo4927db6d6ju30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCokliuV1Idi5jN7XUVY7vhqocWgGIS_w0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078217955018-9dhi37mqifli7lh93oo4927db6d6ju30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078217955018:android:0246b158de064ce7",
+        "android_client_info": {
+          "package_name": "org.myopenrproject.esamu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078217955018-0iu0tgaal0eglipb9e5uakogur1ktolm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.myopenrproject.esamu",
+            "certificate_hash": "9ef9bc0f5cbeb1aeec7e349a989c09b464d89c05"
+          }
+        },
+        {
+          "client_id": "1078217955018-9dhi37mqifli7lh93oo4927db6d6ju30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCokliuV1Idi5jN7XUVY7vhqocWgGIS_w0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078217955018-9dhi37mqifli7lh93oo4927db6d6ju30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

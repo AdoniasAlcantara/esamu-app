@@ -17,7 +17,7 @@ import java.net.URL;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class EmergencyService {
-    private static final String SERVICE = "http://192.168.1.11:8080/esamu/service";
+    private static final String SERVICE = "http://192.168.1.250:8080/esamu/service";
     private static final String SIGNUP = "/users";
     private static final String REPORT = "/emergencies";
     private static final String STATUS = "/emergencies";

@@ -12,11 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.github.rtoshiro.util.format.SimpleMaskFormatter;
-import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -27,7 +24,7 @@ import org.myopenproject.esamu.R;
 import org.myopenproject.esamu.common.ResponseDto;
 import org.myopenproject.esamu.common.UserDto;
 import org.myopenproject.esamu.domain.EmergencyService;
-import org.myopenproject.esamu.domain.Preferences;
+import org.myopenproject.esamu.domain.App;
 import org.myopenproject.esamu.util.Device;
 import org.myopenproject.esamu.util.Dialog;
 
@@ -166,7 +163,7 @@ public class TokenFragment extends Fragment {
                         Log.i(TAG, response.toString());
 
                         // User has been registered then persist it
-                        Preferences.getInstance().saveUser(user);
+                        App.getInstance().saveUser(user);
                         activity.finishSuccess();
                     } else {
                         // Something went very, very wrong

@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navDrawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    tools:context=".presentation.HomeActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".presentation.home.HomeActivity"
+    tools:openDrawer="start">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:padding="32dp"
-        android:text="@string/home_text_info"/>
-
-    <pl.bclogic.pulsator4droid.library.PulsatorLayout
-        android:id="@+id/mainPulsator"
+    <!-- Home contents -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:pulse_count="1"
-        app:pulse_duration="500"
-        app:pulse_repeat="1"
-        app:pulse_color="@color/colorAccent"
-        app:pulse_startFromScratch="false"
-        app:pulse_interpolator="Linear" />
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
 
-    <org.myopenproject.esamu.widget.CountDownButton
-        android:id="@+id/homeButtonEmergency"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/button_emergency"
-        android:textColor="@android:color/white"
-        android:textSize="32sp"
-        android:text="@string/home_button_emergency"
-        app:count="3"
-        app:textScaleFactor="4" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:elevation="3dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="@string/app_name" />
 
-    <com.omega_r.libs.OmegaCenterIconButton
-        android:id="@+id/homeButtonCancel"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="-60dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/button_ripple"
-        android:drawableStart="@drawable/ic_cancel"
-        android:textColor="@android:color/white"
-        android:text="@string/home_button_cancel" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/homeTabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:elevation="3dp"
+            app:tabIndicatorColor="@color/tab_selected"
+            app:tabSelectedTextColor="@color/tab_selected"
+            app:tabTextColor="@color/tab_normal" />
 
-</RelativeLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/homePager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!-- Navigation drawer -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navContent"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/nav_drawer_menu" />
+</android.support.v4.widget.DrawerLayout>

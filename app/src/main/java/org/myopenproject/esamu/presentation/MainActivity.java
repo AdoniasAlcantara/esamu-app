@@ -7,7 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import org.myopenproject.esamu.R;
-import org.myopenproject.esamu.domain.Preferences;
+import org.myopenproject.esamu.domain.App;
+import org.myopenproject.esamu.presentation.home.HomeActivity;
 import org.myopenproject.esamu.presentation.signup.SignUpActivity;
 import org.myopenproject.esamu.util.Permission;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.READ_PHONE_STATE);
 
         // Check if user has the credentials
-        if (Preferences.getInstance().isUserRegistered())
+        if (App.getInstance().isUserRegistered())
             startHome();
     }
 

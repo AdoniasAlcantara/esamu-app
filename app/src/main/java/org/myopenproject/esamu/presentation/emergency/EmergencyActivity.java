@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -33,14 +32,17 @@ import org.myopenproject.esamu.R;
 import org.myopenproject.esamu.common.EmergencyDto;
 import org.myopenproject.esamu.common.ResponseDto;
 import org.myopenproject.esamu.common.UserDto;
+import org.myopenproject.esamu.domain.App;
+import org.myopenproject.esamu.domain.EmergencyGateway;
+import org.myopenproject.esamu.domain.EmergencyRecord;
 import org.myopenproject.esamu.domain.EmergencyService;
-import org.myopenproject.esamu.domain.Preferences;
 import org.myopenproject.esamu.presentation.signup.SignUpActivity;
 import org.myopenproject.esamu.util.Device;
 import org.myopenproject.esamu.util.Dialog;
 import org.myopenproject.esamu.util.Permission;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,7 +54,7 @@ public class EmergencyActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST = 999;
     private static final int IMEI_PERMISSION_REQUEST = 998;
     private static final int ACQUIRE_IMAGE_REQUEST = 997;
-
+    EmergencyDto eDto;
     private FusedLocationProviderClient locationClient;
     private TextView labelTitle;
     private TextView labelMessage;
@@ -63,14 +65,13 @@ public class EmergencyActivity extends AppCompatActivity {
     private boolean isBackPressed;
     private boolean isPictureTaken;
     private byte[] picture;
-    EmergencyDto emergency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency);
 
-        emergency = new EmergencyDto();
+        eDto = new EmergencyDto();
 
         // Set up location service
         locationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -84,7 +85,7 @@ public class EmergencyActivity extends AppCompatActivity {
         // Check runtime permission to get IMEI
         if (Permission.validate(this, IMEI_PERMISSION_REQUEST,
                 Manifest.permission.READ_PHONE_STATE))
-            emergency.setImei(Device.getIMEI(this));
+            eDto.setImei(Device.getIMEI(this));
 
         // Set up views
         imagePictureTaken = findViewById(R.id.emergencyImagePictureTaken);
@@ -100,7 +101,7 @@ public class EmergencyActivity extends AppCompatActivity {
                 R.string.error_unavailable_title,
                 R.string.error_unavailable_msg);
 
-        startCamera(); // Starts camera automatically
+        startCamera(); // Start camera automatically
     }
 
     @Override
@@ -147,7 +148,7 @@ public class EmergencyActivity extends AppCompatActivity {
 
             case IMEI_PERMISSION_REQUEST:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    emergency.setImei(Device.getIMEI(this));
+                    eDto.setImei(Device.getIMEI(this));
         }
     }
 
@@ -183,11 +184,12 @@ public class EmergencyActivity extends AppCompatActivity {
                 });
         dBuilder.setNegativeButton(R.string.dialog_retry,
                 (dialog, which) -> send());
+        dBuilder.show();
     }
 
     private void setLocation(Location location) {
-        emergency.setLatitude(Double.toString(location.getLatitude()));
-        emergency.setLongitude(Double.toString(location.getLongitude()));
+        eDto.setLatitude(Double.toString(location.getLatitude()));
+        eDto.setLongitude(Double.toString(location.getLongitude()));
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
         try {
@@ -196,11 +198,11 @@ public class EmergencyActivity extends AppCompatActivity {
 
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
-                emergency.setAddress(address.getAddressLine(0));
-                emergency.setCity(address.getSubAdminArea());
-                emergency.setState(address.getAdminArea());
-                emergency.setCountry(address.getCountryName());
-                emergency.setPostalCode(address.getPostalCode().replace("-", ""));
+                eDto.setAddress(address.getAddressLine(0));
+                eDto.setCity(address.getSubAdminArea());
+                eDto.setState(address.getAdminArea());
+                eDto.setCountry(address.getCountryName());
+                eDto.setPostalCode(address.getPostalCode().replace("-", ""));
             }
         } catch (IOException e) {
             Log.e(TAG, "Cannot generate Geocoder", e);
@@ -213,7 +215,7 @@ public class EmergencyActivity extends AppCompatActivity {
             return;
         }
 
-        UserDto user = Preferences.getInstance().getUser();
+        UserDto user = App.getInstance().getUser();
 
         if (user == null) {
             // User has not registered yet
@@ -222,9 +224,9 @@ public class EmergencyActivity extends AppCompatActivity {
         }
 
         progress.show();
-        emergency.setUserId(user.getId());
-        emergency.setPicture(Base64.encodeToString(picture, Base64.DEFAULT));
-        Log.i(TAG, emergency.toString());
+        eDto.setUserId(user.getId());
+        eDto.setPicture(Base64.encodeToString(picture, Base64.DEFAULT));
+        Log.i(TAG, eDto.toString());
         doReportEmergencyTask();
     }
 
@@ -236,21 +238,37 @@ public class EmergencyActivity extends AppCompatActivity {
                 ResponseDto response = null;
 
                 try {
-                    response = new EmergencyService().report(emergency);
+                    response = new EmergencyService().report(eDto);
                 } catch (IOException e) {
-                    Log.e(TAG, "Error sending emergency", e);
+                    Log.e(TAG, "Error sending eDto", e);
                 }
 
                 return response;
             }
 
+            @SuppressWarnings("ConstantConditions")
             @Override
             protected void onPostExecute(ResponseDto response) {
                 progress.dismiss();
 
                 if (response != null) {
-                    if (response.getStatusCode() == 201) { // 201: CREATED
-                        Log.i(TAG, "Emergency sent: " + emergency);
+                    if (response.getStatusCode() == 201) {
+                        // 201: CREATED
+                        Log.i(TAG, "Emergency sent: " + eDto);
+
+                        // Save eDto into storage
+                        EmergencyRecord eRecord = new EmergencyRecord();
+                        eRecord.setId(Long.parseLong((String) response.getDetails().get("key")));
+                        eRecord.setStatus(EmergencyRecord.Status.PENDENT);
+                        eRecord.setLocation(eDto.getAddress());
+                        eRecord.setDateTime(new Date(Long.parseLong((String) response
+                                .getDetails().get("timestamp"))));
+
+                        try (EmergencyGateway gateway
+                                     = new EmergencyGateway(EmergencyActivity.this)) {
+                            gateway.create(eRecord);
+                            App.getInstance().getBus().post("refreshHistory");
+                        }
 
                         Dialog.alert(EmergencyActivity.this,
                                 R.string.emergency_dialog_sent_title,

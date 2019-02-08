@@ -5,14 +5,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.onesignal.OneSignal;
+import com.squareup.otto.Bus;
 
 import org.myopenproject.esamu.common.UserDto;
 
-public class Preferences extends Application {
-    private static Preferences singleton;
+public class App extends Application {
+    private static App singleton;
     private UserDto user;
+    private Bus bus;
 
-    public static Preferences getInstance() {
+    public static App getInstance() {
         return singleton;
     }
 
@@ -20,6 +22,7 @@ public class Preferences extends Application {
     public void onCreate() {
         super.onCreate();
         singleton = this;
+        bus = new Bus();
 
         // Initialize OneSignal notifications
         OneSignal.startInit(this)
@@ -64,5 +67,9 @@ public class Preferences extends Application {
         editor.putString("phone", user.getName());
         editor.putString("notification", user.getNotificationKey());
         editor.apply();
+    }
+
+    public Bus getBus() {
+        return bus;
     }
 }

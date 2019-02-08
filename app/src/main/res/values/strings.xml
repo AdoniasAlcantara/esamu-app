@@ -26,9 +26,18 @@
 
     <!-- Home -->
     <string name="home_title">HomeActivity</string>
+    <string name="home_tab_main">Principal</string>
+    <string name="home_tab_history">Histórico</string>
     <string name="home_button_emergency">Emergência</string>
     <string name="home_button_cancel">Cancelar</string>
     <string name="home_text_info">Pressione o botão de emergência para solicitar uma ambulância.</string>
+
+    <!-- Navigation drawer -->
+    <string name="nav_home">Principal</string>
+    <string name="nav_settings">Configurações</string>
+    <string name="nav_about">Sobre</string>
+    <string name="nav_open">Abrir</string>
+    <string name="nav_close">Fechar</string>
 
     <!-- Emergency -->
     <string name="emergency_title">Solicitar Ambulância</string>
@@ -50,7 +59,6 @@
     <string name="camera_text_take_picture">Tire uma foto</string>
     <string name="camera_dialog_title">Título</string>
     <string name="camera_dialog_msg">Mensagem</string>
-
 
     <!-- Misc -->
 
@@ -76,8 +84,13 @@
     <string name="error_googleplay_msg">Instale a versão mais recente do Google Play Services</string>
     <string name="error_not_implemented">Não implementado</string>
     <string name="error_fatal">Erro faltal</string>
+    <string name="error_permission_title">Permissão</string>
+    <string name="error_permission_camera">Você não concedeu permissão para utilizar a camera</string>
 
     <!-- Phone number code by country -->
     <string name="country_code">+55</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -127,6 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
                             message = R.string.signup_error_sms_exceeded;
                         }
 
+                        Log.e("AUTH", e.getMessage());
                         // Show an error dialog and exit the activity
                         Dialog.alert(SignUpActivity.this, title, message,
                                 (dialog, which) -> finishUnsuccessful());

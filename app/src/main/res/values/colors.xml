@@ -18,4 +18,8 @@
     <color name="button_card_default">#FFFFFF</color>
     <color name="button_card_focused">#FFCBB3</color>
     <color name="button_card_text">@color/colorPrimary</color>
+
+    <!-- Tabs -->
+    <color name="tab_selected">@android:color/white</color>
+    <color name="tab_normal">#ffbe99</color>
 </resources>

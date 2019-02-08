@@ -1,36 +1,41 @@
-package org.myopenproject.esamu.presentation;
+package org.myopenproject.esamu.presentation.home;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import org.myopenproject.esamu.R;
 import org.myopenproject.esamu.presentation.emergency.EmergencyActivity;
 import org.myopenproject.esamu.util.Device;
-import org.myopenproject.esamu.util.Dialog;
 import org.myopenproject.esamu.widget.CountDownButton;
 
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
-public class HomeActivity extends AppCompatActivity {
-    CountDownButton buttonEmergency;
-    Button buttonCancel;
-    PulsatorLayout layoutPulsator;
-    ProgressDialog progress;
+public class HomeFragment extends Fragment {
+    private CountDownButton buttonEmergency;
+    private Button buttonCancel;
+    private PulsatorLayout layoutPulsator;
+    private ProgressDialog progress;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+    @SuppressWarnings("ConstantConditions")
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
 
-        layoutPulsator = findViewById(R.id.mainPulsator);
-        buttonCancel = findViewById(R.id.homeButtonCancel);
+            Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        layoutPulsator = view.findViewById(R.id.homePulsator);
+        buttonCancel = view.findViewById(R.id.homeButtonCancel);
         buttonCancel.setOnClickListener(v -> buttonEmergency.reset());
-        buttonEmergency = findViewById(R.id.homeButtonEmergency);
+        buttonEmergency = view.findViewById(R.id.homeButtonEmergency);
 
         // Adding emergency button events
         buttonEmergency.setCountDownListeners(new CountDownButton.CountDownListeners() {
@@ -48,35 +53,41 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onTick(int count) {
-                Device.vibrate(HomeActivity.this, 200);
+                Device.vibrate(getContext(), 200);
                 layoutPulsator.start();
             }
 
             @Override
             public void onFinish() {
-                Device.vibrate(HomeActivity.this, 500);
+                Device.vibrate(getContext(), 500);
                 layoutPulsator.start();
                 startEmergency();
             }
         });
 
         // Set up Progress Dialog
-        progress = new ProgressDialog(this);
+        progress = new ProgressDialog(getContext());
         progress.setCancelable(false);
         progress.setMessage(getString(R.string.dialog_wait));
+
+        return view;
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
+        reset();
+        super.onStop();
+    }
+
+    public void reset() {
         if (progress.isShowing())
             progress.dismiss();
 
         buttonEmergency.reset();
-        super.onStop();
     }
 
     private void startEmergency() {
         progress.show();
-        startActivity(new Intent(this, EmergencyActivity.class));
+        startActivity(new Intent(getContext(), EmergencyActivity.class));
     }
 }

@@ -95,7 +95,7 @@ public class Device {
     public static void doPhoneCall(Activity activity, String phoneNumber) {
         Intent it = new Intent();
         it.setAction(Intent.ACTION_CALL);
-        it.setData(Uri.parse(phoneNumber));
+        it.setData(Uri.parse("tel:" + phoneNumber));
         activity.startActivity(it);
     }
 }

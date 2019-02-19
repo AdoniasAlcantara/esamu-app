@@ -1,9 +1,12 @@
 package org.myopenproject.esamu.presentation.home;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +20,20 @@ import org.myopenproject.esamu.widget.CountDownButton;
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 public class HomeFragment extends Fragment {
+    private static final int CALL_EMERGENCY_REQUEST = 1;
     private CountDownButton buttonEmergency;
     private Button buttonCancel;
     private PulsatorLayout layoutPulsator;
     private ProgressDialog progress;
+    private HomeActivity activity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof HomeActivity)
+            activity = (HomeActivity) context;
+    }
 
     @Override
     @SuppressWarnings("ConstantConditions")
@@ -75,19 +88,37 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onStop() {
-        reset();
-        super.onStop();
-    }
-
-    public void reset() {
         if (progress.isShowing())
             progress.dismiss();
 
         buttonEmergency.reset();
+        super.onStop();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (activity != null
+                &&requestCode == CALL_EMERGENCY_REQUEST
+                && resultCode == Activity.RESULT_OK) {
+            activity.showPage(HomeActivity.PAGE_HISTORY);
+            Log.d("TEST", "Ok my friend");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        activity = null;
+        super.onDetach();
+    }
+
+    public void reset() {
+        if (buttonEmergency != null && buttonEmergency.isCounting())
+            buttonEmergency.reset();
     }
 
     private void startEmergency() {
         progress.show();
-        startActivity(new Intent(getContext(), EmergencyActivity.class));
+        startActivityForResult(
+                new Intent(getContext(), EmergencyActivity.class), CALL_EMERGENCY_REQUEST);
     }
 }

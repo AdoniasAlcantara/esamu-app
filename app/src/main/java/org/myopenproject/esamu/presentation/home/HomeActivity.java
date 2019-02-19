@@ -12,8 +12,12 @@ import org.myopenproject.esamu.R;
 import org.myopenproject.esamu.widget.NavDrawerActivity;
 
 public class HomeActivity extends NavDrawerActivity {
+    public static final int PAGE_MAIN = 0;
+    public static final int PAGE_HISTORY = 1;
+
     private HomeFragment homeFrag;
     private HistoryFragment historyFrag;
+    private ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,7 @@ public class HomeActivity extends NavDrawerActivity {
         historyFrag = new HistoryFragment();
 
         // View Pager
-        ViewPager pager = findViewById(R.id.homePager);
+        pager = findViewById(R.id.homePager);
         pager.setOffscreenPageLimit(2);
         pager.setAdapter(new TabsAdapter(getSupportFragmentManager()));
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -48,6 +52,10 @@ public class HomeActivity extends NavDrawerActivity {
         // Tabs
         TabLayout tabs = findViewById(R.id.homeTabs);
         tabs.setupWithViewPager(pager);
+    }
+
+    public void showPage(int page) {
+        pager.setCurrentItem(page);
     }
 
     private class TabsAdapter extends FragmentPagerAdapter {

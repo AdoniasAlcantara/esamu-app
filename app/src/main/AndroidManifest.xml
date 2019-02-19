@@ -27,6 +27,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
+
         <!-- Main -->
         <activity
             android:name=".presentation.MainActivity"
@@ -63,6 +67,11 @@
             android:name=".presentation.emergency.CameraActivity"
             android:screenOrientation="fullUser"
             android:theme="@style/FullScreenTheme" />
+
+        <activity
+            android:name=".presentation.firstaid.FirstAidActivity"
+            android:label="@string/firstaid_title"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -86,6 +86,10 @@ public class CountDownButton extends android.support.v7.widget.AppCompatButton {
         this.listeners = listeners;
     }
 
+    public boolean isCounting() {
+        return isCounting;
+    }
+
     public void reset() {
         if (isCounting)
             stopCount();
@@ -96,17 +100,17 @@ public class CountDownButton extends android.support.v7.widget.AppCompatButton {
     }
 
     private void startCount() {
-        listeners.onStartCount();
         isCounting = true;
         setTextSize(TypedValue.COMPLEX_UNIT_PX, startTextSize * textScaleFactor);
         setText(Integer.toString(secondsRemaining));
         timer.start();
+        listeners.onStartCount();
     }
 
     private void stopCount() {
-        listeners.onStopCount(secondsRemaining + 1);
         isCounting = false;
         timer.cancel();
+        listeners.onStopCount(secondsRemaining + 1);
     }
 
     public interface CountDownListeners {

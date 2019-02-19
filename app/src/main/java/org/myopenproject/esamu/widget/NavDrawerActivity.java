@@ -14,9 +14,11 @@ import org.myopenproject.esamu.util.Dialog;
 public abstract class NavDrawerActivity extends AppCompatActivity {
     protected DrawerLayout drawerLayout;
 
+    @SuppressWarnings("ConstantConditions")
     protected void setupToolbarAndNavDrawer() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         drawerLayout = findViewById(R.id.navDrawer);
 
         // Bind drawer layout to toolbar

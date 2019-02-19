@@ -57,21 +57,25 @@ public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable 
         return count > 0;
     }
 
+    public EmergencyRecord find(long id) {
+        Cursor c = db.query("tb_emergency", null, "id=" + id, null, null , null , null);
+        EmergencyRecord e = null;
+
+        if (c.moveToFirst())
+            e = fromRecord(c);
+
+        return e;
+    }
+
     public List<EmergencyRecord> findAll() {
-        Cursor c = db.query("tb_emergency", null, null, null, null, null, null);
+        Cursor c = db.query("tb_emergency", null, null, null, null, null, "id DESC");
         List<EmergencyRecord> emergencies = null;
 
         if (c.moveToFirst()) {
             emergencies = new ArrayList<>();
 
             do {
-                EmergencyRecord e = new EmergencyRecord();
-                e.setId(c.getInt(c.getColumnIndex("id")));
-                e.setDateTime(new Date(c.getLong(c.getColumnIndex("date_time"))));
-                e.setLocation(c.getString(c.getColumnIndex("location")));
-                e.setAttachment(c.getInt(c.getColumnIndex("attachment")));
-                e.setStatus(EmergencyRecord.Status.valueOf(c.getInt(c.getColumnIndex("status"))));
-                emergencies.add(e);
+                emergencies.add(fromRecord(c));
             } while (c.moveToNext());
         }
 
@@ -91,6 +95,22 @@ public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable 
         values.put("status", emergency.getStatus().ordinal());
         values.put("attachment", emergency.getAttachment());
 
+        String location = emergency.getLocation();
+
+        if (location != null)
+            values.put("location", location);
+
         return values;
+    }
+
+    private EmergencyRecord fromRecord(Cursor c) {
+        EmergencyRecord e = new EmergencyRecord();
+        e.setId(c.getInt(c.getColumnIndex("id")));
+        e.setDateTime(new Date(c.getLong(c.getColumnIndex("date_time"))));
+        e.setLocation(c.getString(c.getColumnIndex("location")));
+        e.setAttachment(c.getInt(c.getColumnIndex("attachment")));
+        e.setStatus(EmergencyRecord.Status.valueOf(c.getInt(c.getColumnIndex("status"))));
+
+        return e;
     }
 }

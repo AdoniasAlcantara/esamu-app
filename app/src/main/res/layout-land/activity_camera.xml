@@ -24,7 +24,7 @@
         android:id="@+id/cameraButtonTakePicture"
         android:layout_width="80dp"
         android:layout_height="match_parent"
-        android:background="@drawable/button_ripple"
+        android:background="@drawable/button_ripple_dark"
         android:contentDescription="@string/camera_text_take_picture"
         android:src="@drawable/ic_take_shot" />
 

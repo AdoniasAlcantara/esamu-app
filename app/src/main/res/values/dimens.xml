@@ -13,11 +13,10 @@
     <dimen name="button_card_radius">30dp</dimen>
 
     <!-- Card -->
-    <dimen name="card_layout_padding">16dp</dimen>
-
+    <dimen name="card_padding">16dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_radius">8dp</dimen>
-    <dimen name="card_title">20sp</dimen>
+    <dimen name="card_title">18sp</dimen>
     <dimen name="card_text">16sp</dimen>
 
     <!-- Text -->

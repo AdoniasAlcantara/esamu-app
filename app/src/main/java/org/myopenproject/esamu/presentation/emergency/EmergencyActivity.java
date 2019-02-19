@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,8 +42,6 @@ import org.myopenproject.esamu.util.Permission;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 @SuppressLint("MissingPermission")
 public class EmergencyActivity extends AppCompatActivity {
@@ -162,6 +159,11 @@ public class EmergencyActivity extends AppCompatActivity {
         }
     }
 
+    private void finishSuccess() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
     private void startCamera() {
         Intent it = new Intent(this, CameraActivity.class);
         it.putExtra(IS_PICTURE_TAKEN_PARAM, isPictureTaken);
@@ -190,23 +192,6 @@ public class EmergencyActivity extends AppCompatActivity {
     private void setLocation(Location location) {
         eDto.setLatitude(Double.toString(location.getLatitude()));
         eDto.setLongitude(Double.toString(location.getLongitude()));
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
-        try {
-            List<Address> addresses = geocoder
-                    .getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-            if (addresses.size() > 0) {
-                Address address = addresses.get(0);
-                eDto.setAddress(address.getAddressLine(0));
-                eDto.setCity(address.getSubAdminArea());
-                eDto.setState(address.getAdminArea());
-                eDto.setCountry(address.getCountryName());
-                eDto.setPostalCode(address.getPostalCode().replace("-", ""));
-            }
-        } catch (IOException e) {
-            Log.e(TAG, "Cannot generate Geocoder", e);
-        }
     }
 
     private void send() {
@@ -226,7 +211,6 @@ public class EmergencyActivity extends AppCompatActivity {
         progress.show();
         eDto.setUserId(user.getId());
         eDto.setPicture(Base64.encodeToString(picture, Base64.DEFAULT));
-        Log.i(TAG, eDto.toString());
         doReportEmergencyTask();
     }
 
@@ -256,12 +240,20 @@ public class EmergencyActivity extends AppCompatActivity {
                         // 201: CREATED
                         Log.i(TAG, "Emergency sent: " + eDto);
 
-                        // Save eDto into storage
+                        // Save emergency to storage
                         EmergencyRecord eRecord = new EmergencyRecord();
-                        eRecord.setId(Long.parseLong((String) response.getDetails().get("key")));
+                        eRecord.setId(Long.parseLong(response.getDetails().get("key")));
                         eRecord.setStatus(EmergencyRecord.Status.PENDENT);
-                        eRecord.setLocation(eDto.getAddress());
-                        eRecord.setDateTime(new Date(Long.parseLong((String) response
+
+                        Address addr = Device.getAddress(
+                                EmergencyActivity.this, Double.parseDouble(eDto.getLatitude()),
+                                Double.parseDouble(eDto.getLongitude()));
+
+                        if (addr != null)
+                            eRecord.setLocation(addr.getAddressLine(0));
+
+
+                        eRecord.setDateTime(new Date(Long.parseLong(response
                                 .getDetails().get("timestamp"))));
 
                         try (EmergencyGateway gateway
@@ -273,7 +265,7 @@ public class EmergencyActivity extends AppCompatActivity {
                         Dialog.alert(EmergencyActivity.this,
                                 R.string.emergency_dialog_sent_title,
                                 R.string.emergency_dialog_sent_msg,
-                                (dialog, which) -> finish());
+                                (dialog, which) -> finishSuccess());
                     } else {
                         Log.e(TAG, response.toString());
 

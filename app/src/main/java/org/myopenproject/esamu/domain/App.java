@@ -25,7 +25,10 @@ public class App extends Application {
         bus = new Bus();
 
         // Initialize OneSignal notifications
+        NotificationReceiver receiver = new NotificationReceiver();
         OneSignal.startInit(this)
+                .setNotificationReceivedHandler(receiver)
+                .setNotificationOpenedHandler(receiver)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();

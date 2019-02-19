@@ -4,20 +4,15 @@ import java.util.Date;
 
 public class EmergencyRecord {
     private long id;
-    private String resource;
     private Date dateTime;
     private Status status;
-    private int attachment;
+    private int attachment = -1;
     private String location;
 
     // Getters
 
     public long getId() {
         return id;
-    }
-
-    public String getResource() {
-        return resource;
     }
 
     public Date getDateTime() {
@@ -40,10 +35,6 @@ public class EmergencyRecord {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setResource(String resource) {
-        this.resource = resource;
     }
 
     public void setDateTime(Date dateTime) {

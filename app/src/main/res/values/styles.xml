@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -40,6 +39,14 @@
         <item name="colorButtonNormal">#C63131</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:drawablePadding">0dp</item>
+    </style>
+
+    <!-- Flat -->
+    <style name="ButtonFlatPrimary" parent="AppTheme">
+        <item name="android:buttonStyle">
+            @style/Widget.AppCompat.Button.Borderless.Colored
+        </item>
+        <item name="colorControlHighlight">#FC8236</item>
     </style>
 
     <!-- FAB -->

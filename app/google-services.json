@@ -75,6 +75,14 @@
           }
         },
         {
+          "client_id": "1078217955018-ol30dmdcg55i07vla81o6ruf5db2a5nd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.myopenproject.esamu",
+            "certificate_hash": "ca34e47e988ac162fd899bcc4f4388a31193b822"
+          }
+        },
+        {
           "client_id": "1078217955018-9dhi37mqifli7lh93oo4927db6d6ju30.apps.googleusercontent.com",
           "client_type": 3
         }

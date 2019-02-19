@@ -22,4 +22,11 @@
     <!-- Tabs -->
     <color name="tab_selected">@android:color/white</color>
     <color name="tab_normal">#ffbe99</color>
+
+    <!-- Status -->
+    <color name="pendent">#ff9900</color>
+    <color name="progress">#6699ff</color>
+    <color name="finished">#00cc99</color>
+    <color name="canceled">#a6a6a6</color>
+
 </resources>

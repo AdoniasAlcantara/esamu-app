@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -14,15 +16,20 @@ import android.telephony.TelephonyManager;
 import android.view.Surface;
 import android.view.WindowManager;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class Device {
-    private Device() {}
+    private Device() {
+    }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return  activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
     public static void vibrate(Context context, long milliseconds) {
@@ -90,6 +97,21 @@ public class Device {
     public static String getIMEI(Context context) {
         return ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE))
                 .getDeviceId();
+    }
+
+    public static Address getAddress(Context context, double lat, double lng) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        Address addr = null;
+
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+
+            if (addresses.size() > 0)
+                addr = addresses.get(0);
+        } catch (IOException ignored) {}
+
+        return addr;
     }
 
     public static void doPhoneCall(Activity activity, String phoneNumber) {

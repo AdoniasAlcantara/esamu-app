@@ -32,7 +32,20 @@
     <string name="home_button_cancel">Cancelar</string>
     <string name="home_text_info">Pressione o botão de emergência para solicitar uma ambulância.</string>
 
+    <!-- History card -->
+    <string name="history_card_title_default">Status indefinido</string>
+    <string name="history_card_time">Horário: %s.</string>
+    <string name="history_card_time_default">Horário: indefinido.</string>
+    <string name="history_card_location">Local: %s.</string>
+    <string name="history_card_location_default">Local: indefinido.</string>
+    <string name="history_card_button_attach">Ver primeiros socorros</string>
+    <string name="history_card_status_pendent">Aguardando atendimento</string>
+    <string name="history_card_status_progress">Resgate em andamento</string>
+    <string name="history_card_status_finished">Concluído</string>
+    <string name="history_card_status_canceled">Solicitação cancelada</string>
+
     <!-- Navigation drawer -->
+    <string name="nav_header_brand">e-SAMU</string>
     <string name="nav_home">Principal</string>
     <string name="nav_settings">Configurações</string>
     <string name="nav_about">Sobre</string>
@@ -57,8 +70,16 @@
 
     <!-- Camera -->
     <string name="camera_text_take_picture">Tire uma foto</string>
-    <string name="camera_dialog_title">Título</string>
-    <string name="camera_dialog_msg">Mensagem</string>
+    <string name="camera_dialog_title">Tire uma foto</string>
+    <string name="camera_dialog_msg">Aponte a câmera para o local do acidente e tire uma foto.</string>
+
+    <!-- First aid -->
+    <string name="firstaid_title">Primeiros socorros</string>
+
+    <!-- Group 0 -->
+    <string name="fa_0_0">Procedimentos de primeiros socorros aqui.</string>
+    <string name="fa_0_1">Procedimentos de primeiros socorros aqui.</string>
+    <string name="fa_0_2">Procedimentos de primeiros socorros aqui.</string>
 
     <!-- Misc -->
 

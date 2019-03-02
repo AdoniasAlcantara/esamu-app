@@ -15,12 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
 import org.myopenproject.esamu.R;
-import org.myopenproject.esamu.domain.App;
+import org.myopenproject.esamu.App;
 import org.myopenproject.esamu.domain.EmergencyGateway;
 import org.myopenproject.esamu.domain.EmergencyRecord;
 import org.myopenproject.esamu.presentation.firstaid.FirstAidActivity;
@@ -31,6 +32,7 @@ import java.util.Locale;
 
 public class HistoryFragment extends Fragment {
     private RecyclerView recycler;
+    private TextView textEmpty;
 
     @Override
     public void onAttach(Context context) {
@@ -41,8 +43,10 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             ViewGroup container,
-            Bundle savedInstanceState) {
+            Bundle savedInstanceState
+    ) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
+        textEmpty = view.findViewById(R.id.historyTextEmpty);
         recycler = view.findViewById(R.id.historyRecycler);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
@@ -61,7 +65,6 @@ public class HistoryFragment extends Fragment {
         super.onDestroy();
     }
 
-    // Refresh history by the broadcast way
     @Subscribe
     public void refresh(String msg) {
         if (msg.equals("refreshHistory"))
@@ -75,14 +78,26 @@ public class HistoryFragment extends Fragment {
             emergencies = gateway.findAll();
         }
 
-        if (emergencies != null)
+        if (emergencies != null) {
+            textEmpty.setVisibility(View.GONE);
             recycler.setAdapter(new HistoryAdapter(emergencies));
+        } else {
+            textEmpty.setVisibility(View.VISIBLE);
+            recycler.setAdapter(null);
+        }
     }
 
     private void onAttachmentClicked(int attach) {
         Intent it = new Intent(getContext(), FirstAidActivity.class);
         it.putExtra(FirstAidActivity.PARAM_ATTACH, attach);
         startActivity(it);
+    }
+
+    private void onDeleteClicked(long id) {
+        try (EmergencyGateway gateway = new EmergencyGateway(getContext())) {
+            gateway.remove(id);
+            refresh();
+        }
     }
 
     private class HistoryAdapter extends RecyclerView.Adapter<ViewHolder> {
@@ -126,11 +141,17 @@ public class HistoryFragment extends Fragment {
                 case FINISHED:
                     titleRes = R.string.history_card_status_finished;
                     colorRes = R.color.finished;
+                    viewHolder.buttonDelete.setVisibility(View.VISIBLE);
+                    viewHolder.buttonDelete.setOnClickListener(
+                            v -> onDeleteClicked(record.getId()));
                     break;
 
                 case CANCELED:
                     titleRes = R.string.history_card_status_canceled;
                     colorRes = R.color.canceled;
+                    viewHolder.buttonDelete.setVisibility(View.VISIBLE);
+                    viewHolder.buttonDelete.setOnClickListener(
+                            v -> onDeleteClicked(record.getId()));
             }
 
             viewHolder.title.setText(getString(titleRes));
@@ -139,7 +160,8 @@ public class HistoryFragment extends Fragment {
             viewHolder.edge.setColorFilter(color, PorterDuff.Mode.SRC_OVER);
 
             // Date time
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm - dd/MM/yy", Locale.getDefault());
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm - dd/MM/yy",
+                    Locale.getDefault());
             String dateTime = formatter.format(record.getDateTime());
             viewHolder.dateTime
                     .setText(String.format(getString(R.string.history_card_time), dateTime));
@@ -149,7 +171,8 @@ public class HistoryFragment extends Fragment {
 
             if (location != null)
                 viewHolder.location
-                        .setText(String.format(getString(R.string.history_card_location), location));
+                        .setText(
+                                String.format(getString(R.string.history_card_location), location));
 
             // Attachment
             int attach = record.getAttachment();
@@ -171,15 +194,17 @@ public class HistoryFragment extends Fragment {
         TextView dateTime;
         TextView location;
         Button buttonAttach;
+        ImageView buttonDelete;
         Drawable edge;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.historyCardTitle);
             dateTime = itemView.findViewById(R.id.historyCardTime);
             location = itemView.findViewById(R.id.historyCardLocation);
             buttonAttach = itemView.findViewById(R.id.historyCardAttach);
+            buttonDelete = itemView.findViewById(R.id.historyCardButtonDelete);
             edge = itemView.findViewById(R.id.historyCardEdge).getBackground();
         }
     }

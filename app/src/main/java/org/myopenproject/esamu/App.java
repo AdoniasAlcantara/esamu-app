@@ -1,4 +1,4 @@
-package org.myopenproject.esamu.domain;
+package org.myopenproject.esamu;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,43 +8,54 @@ import com.onesignal.OneSignal;
 import com.squareup.otto.Bus;
 
 import org.myopenproject.esamu.common.UserDto;
+import org.myopenproject.esamu.domain.NotificationReceiver;
 
-public class App extends Application {
+public class App extends Application
+{
+    // Broadcast events
+    public static final int BUS_REFRESH_HISTORY = 999;
+
     private static App singleton;
     private UserDto user;
-    private Bus bus;
+    private Bus bus; // A bus to deal with broadcast events
 
-    public static App getInstance() {
+    public static App getInstance()
+    {
         return singleton;
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate()
+    {
         super.onCreate();
+
         singleton = this;
         bus = new Bus();
 
         // Initialize OneSignal notifications
         NotificationReceiver receiver = new NotificationReceiver();
         OneSignal.startInit(this)
-                .setNotificationReceivedHandler(receiver)
-                .setNotificationOpenedHandler(receiver)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
+            .setNotificationReceivedHandler(receiver)
+            .setNotificationOpenedHandler(receiver)
+            .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+            .unsubscribeWhenNotificationsAreDisabled(true)
+            .init();
     }
 
-    public boolean isUserRegistered() {
+    public boolean isUserRegistered()
+    {
         return getUser() != null;
     }
 
-    public UserDto getUser() {
-        if (user != null)
+    public UserDto getUser()
+    {
+        if (user != null) {
             return user;
+        }
 
-        // Restore user from SharedPreferences
+        // Restore user from SharedPreferences, otherwise.
         SharedPreferences prefs = getApplicationContext()
-                .getSharedPreferences("user_credentials", Context.MODE_PRIVATE);
+            .getSharedPreferences("user_credentials", Context.MODE_PRIVATE);
 
         if (prefs.contains("id")) {
             user = new UserDto();
@@ -57,13 +68,14 @@ public class App extends Application {
         return user;
     }
 
-    public void saveUser(UserDto user) {
+    public void saveUser(UserDto user)
+    {
         this.user = user;
 
         // Persist user to SharedPreferences
         SharedPreferences.Editor editor = getApplicationContext()
-                .getSharedPreferences("user_credentials", Context.MODE_PRIVATE)
-                .edit();
+            .getSharedPreferences("user_credentials", Context.MODE_PRIVATE)
+            .edit();
 
         editor.putString("id", user.getId());
         editor.putString("name", user.getName());
@@ -72,7 +84,8 @@ public class App extends Application {
         editor.apply();
     }
 
-    public Bus getBus() {
+    public Bus getBus()
+    {
         return bus;
     }
 }

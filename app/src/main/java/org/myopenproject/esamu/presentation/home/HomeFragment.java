@@ -5,8 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,8 @@ import org.myopenproject.esamu.widget.CountDownButton;
 
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment
+{
     private static final int CALL_EMERGENCY_REQUEST = 1;
     private CountDownButton buttonEmergency;
     private Button buttonCancel;
@@ -28,21 +29,20 @@ public class HomeFragment extends Fragment {
     private HomeActivity activity;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
 
-        if (context instanceof HomeActivity)
+        if (context instanceof HomeActivity) {
             activity = (HomeActivity) context;
+        }
     }
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    public View onCreateView(
-            LayoutInflater inflater,
-            ViewGroup container,
-
-            Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle bundle)
+    {
+        // Inflate layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         layoutPulsator = view.findViewById(R.id.homePulsator);
@@ -50,28 +50,33 @@ public class HomeFragment extends Fragment {
         buttonCancel.setOnClickListener(v -> buttonEmergency.reset());
         buttonEmergency = view.findViewById(R.id.homeButtonEmergency);
 
-        // Adding emergency button events
-        buttonEmergency.setCountDownListeners(new CountDownButton.CountDownListeners() {
+        // Set up emergency button events
+        buttonEmergency.setCountDownListeners(new CountDownButton.CountDownListeners()
+        {
             @Override
-            public void onStartCount() {
+            public void onStartCount()
+            {
                 int h = buttonCancel.getHeight();
                 buttonCancel.animate().setDuration(500).translationY(1 - h).start();
             }
 
             @Override
-            public void onStopCount(int count) {
+            public void onStopCount(int count)
+            {
                 int h = buttonCancel.getHeight();
                 buttonCancel.animate().setDuration(500).translationY(h - 1).start();
             }
 
             @Override
-            public void onTick(int count) {
+            public void onTick(int count)
+            {
                 Device.vibrate(getContext(), 200);
                 layoutPulsator.start();
             }
 
             @Override
-            public void onFinish() {
+            public void onFinish()
+            {
                 Device.vibrate(getContext(), 500);
                 layoutPulsator.start();
                 startEmergency();
@@ -87,38 +92,45 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        if (progress.isShowing())
+    public void onStop()
+    {
+        if (progress.isShowing()) {
             progress.dismiss();
+        }
 
         buttonEmergency.reset();
         super.onStop();
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         if (activity != null
-                &&requestCode == CALL_EMERGENCY_REQUEST
-                && resultCode == Activity.RESULT_OK) {
+            && requestCode == CALL_EMERGENCY_REQUEST
+            && resultCode == Activity.RESULT_OK)
+        {
             activity.showPage(HomeActivity.PAGE_HISTORY);
-            Log.d("TEST", "Ok my friend");
         }
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         activity = null;
         super.onDetach();
     }
 
-    public void reset() {
-        if (buttonEmergency != null && buttonEmergency.isCounting())
+    public void reset()
+    {
+        if (buttonEmergency != null && buttonEmergency.isCounting()) {
             buttonEmergency.reset();
+        }
     }
 
-    private void startEmergency() {
+    private void startEmergency()
+    {
         progress.show();
         startActivityForResult(
-                new Intent(getContext(), EmergencyActivity.class), CALL_EMERGENCY_REQUEST);
+            new Intent(getContext(), EmergencyActivity.class), CALL_EMERGENCY_REQUEST);
     }
 }

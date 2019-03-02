@@ -17,10 +17,16 @@ import java.net.URL;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class EmergencyService {
-    //private static final String SERVICE = "http://nbcgib.uesc.br/esamu/service";
-    private static final String SERVICE = "http://192.168.1.10:8080/esamu/service";
-    private static final String SIGNUP = "/users";
+    // Webservice URL
+    private static final String SERVICE = "http://nbcgib.uesc.br/esamu/service";
+    //private static final String SERVICE = "http://192.168.1.10:8080/esamu/service";
+
+    // Resource identifiers
+    private static final String SIGN_UP = "/users";
     private static final String REPORT = "/emergencies";
+
+    // The timeout of connection in milliseconds
+    private static final int TIMEOUT = 30000;
 
     private Gson gson;
 
@@ -31,20 +37,22 @@ public class EmergencyService {
                 .setPrettyPrinting()
                 .serializeNulls()
                 .create();
-
     }
 
+    // Request to register user
     public ResponseDto signUp(UserDto user) throws IOException {
-        return sendJson(user, SERVICE + SIGNUP);
+        return sendJson(user, SERVICE + SIGN_UP);
     }
 
+    // Request to ask for help
     public ResponseDto report(EmergencyDto emergency) throws IOException {
         return sendJson(emergency, SERVICE + REPORT);
     }
 
     private ResponseDto sendJson(Object obj, String url) throws IOException {
-        // Create http connection
+        // Create HTTP connection
         HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+        conn.setReadTimeout(TIMEOUT);
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Accept", "application/json");

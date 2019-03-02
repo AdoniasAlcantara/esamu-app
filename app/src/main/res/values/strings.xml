@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">e-SAMU</string>
+    <string name="app_version">Versão: 0.0.1</string>
 
     <!-- Resources are named as follows: -->
     <!-- <WHERE>_<WHAT>_<DESCRIPTION> (eg. signup_input_name) -->
@@ -10,7 +11,7 @@
 
     <!-- Sign up -->
     <string name="signup_title">Verifique seu número</string>
-    <string name="signup_text_info">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="signup_text_info">Para oferecer um atendimento aprimorado, o e-SAMU requer que seja realizada a verificação em duas etapas, a qual exigirá o registro do seu número de telefone.</string>
     <string name="signup_text_fill">Preencha os campos abaixo com suas informações. O e-SAMU enviará um código SMS para verificar o número de telefone.</string>
     <string name="signup_text_sms_sent">SMS enviado para %s. Insira o código de verificação recebido ou aguarde a detecção automática.</string>
     <string name="signup_label_name">Nome</string>
@@ -39,10 +40,12 @@
     <string name="history_card_location">Local: %s.</string>
     <string name="history_card_location_default">Local: indefinido.</string>
     <string name="history_card_button_attach">Ver primeiros socorros</string>
+    <string name="history_card_button_delete">Apagar</string>
     <string name="history_card_status_pendent">Aguardando atendimento</string>
     <string name="history_card_status_progress">Resgate em andamento</string>
     <string name="history_card_status_finished">Concluído</string>
     <string name="history_card_status_canceled">Solicitação cancelada</string>
+    <string name="history_card_text_empty">Não há registro de emergência</string>
 
     <!-- Navigation drawer -->
     <string name="nav_header_brand">e-SAMU</string>
@@ -60,18 +63,20 @@
     <string name="emergency_text_title_add_pic">Adicione uma Foto</string>
     <string name="emergency_text_info_add_pic">Use sua câmera para adicionar uma foto à emergência.</string>
     <string name="emergency_text_ready_title">Pronto!</string>
-    <string name="emergency_text_ready_msg">Envie a emergência.</string>
+    <string name="emergency_text_ready_msg">Envie a solicitação agora.</string>
     <string name="emergency_hint_picture">Foto de emergência</string>
-    <string name="emergency_toast_back_pressed">Pressione voltar mais uma vez para cancelar a solicitação</string>
+    <string name="emergency_toast_back_pressed">Pressione voltar novamente para cancelar a solicitação.</string>
     <string name="emergency_dialog_sent_title">Solicitação enviada</string>
-    <string name="emergency_dialog_sent_msg">Aguarde o atendimento do SAMU</string>
+    <string name="emergency_dialog_sent_msg">Aguarde o atendimento do SAMU em alguns instantes.</string>
     <string name="emergency_dialog_suggest_call">Deseja iniciar uma ligação com o SAMU 192 agora?</string>
     <string name="emergency_dialog_call_192">Discar 192</string>
+    <string name="emergency_progress_msg">Obtendo localização… (%s)</string>
 
     <!-- Camera -->
     <string name="camera_text_take_picture">Tire uma foto</string>
     <string name="camera_dialog_title">Tire uma foto</string>
-    <string name="camera_dialog_msg">Aponte a câmera para o local do acidente e tire uma foto.</string>
+    <string name="camera_dialog_msg">Aponte a câmera para o local da emergência e tire uma foto.</string>
+    <string name="camera_progress_msg">Obtendo imagem…</string>
 
     <!-- First aid -->
     <string name="firstaid_title">Primeiros socorros</string>
@@ -104,14 +109,12 @@
     <string name="error_googleplay_title">Google Play</string>
     <string name="error_googleplay_msg">Instale a versão mais recente do Google Play Services</string>
     <string name="error_not_implemented">Não implementado</string>
-    <string name="error_fatal">Erro faltal</string>
+    <string name="error_unkown_location">Não foi possível determinar a localização.</string>
+    <string name="error_unknown">Erro desconhecido</string>
     <string name="error_permission_title">Permissão</string>
     <string name="error_permission_camera">Você não concedeu permissão para utilizar a camera</string>
 
     <!-- Phone number code by country -->
     <string name="country_code">+55</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

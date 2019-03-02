@@ -14,8 +14,9 @@ import org.myopenproject.esamu.domain.FirstAidItem;
 import java.util.List;
 
 public class FirstAidActivity extends AppCompatActivity {
-    public static final String PARAM_ATTACH = "attachment";
     private static final String TAG = "FIRST_AID";
+
+    public static final String PARAM_ATTACH = "attachment";
     private ViewPager pager;
 
     @SuppressWarnings("ConstantConditions")

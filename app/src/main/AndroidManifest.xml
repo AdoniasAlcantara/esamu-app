@@ -14,7 +14,7 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name=".domain.App"
+        android:name=".App"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,12 +26,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"
             android:value="DISABLE" />
 
-        <!-- Main -->
         <activity
             android:name=".presentation.MainActivity"
             android:screenOrientation="portrait"
@@ -43,26 +41,28 @@
             </intent-filter>
         </activity>
 
-        <!-- Sign up -->
+        <activity android:name=".presentation.settings.SettingsActivity" />
+
+        <activity
+            android:name=".presentation.settings.AboutActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".presentation.signup.SignUpActivity"
             android:label="@string/signup_title"
             android:screenOrientation="portrait" />
 
-        <!-- Home -->
         <activity
             android:name=".presentation.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NavDrawer" />
 
-        <!-- Emergency -->
         <activity
             android:name=".presentation.emergency.EmergencyActivity"
             android:label="@string/emergency_title"
             android:parentActivityName=".presentation.home.HomeActivity"
             android:screenOrientation="portrait" />
 
-        <!-- Camera -->
         <activity
             android:name=".presentation.emergency.CameraActivity"
             android:screenOrientation="fullUser"

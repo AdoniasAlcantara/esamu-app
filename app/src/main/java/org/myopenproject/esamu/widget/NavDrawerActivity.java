@@ -1,5 +1,7 @@
 package org.myopenproject.esamu.widget;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,13 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import org.myopenproject.esamu.R;
+import org.myopenproject.esamu.presentation.settings.AboutActivity;
 import org.myopenproject.esamu.util.Dialog;
 
-public abstract class NavDrawerActivity extends AppCompatActivity {
+public abstract class NavDrawerActivity extends AppCompatActivity
+{
     protected DrawerLayout drawerLayout;
 
     @SuppressWarnings("ConstantConditions")
-    protected void setupToolbarAndNavDrawer() {
+    protected void setupToolbarAndNavDrawer()
+    {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -23,16 +28,22 @@ public abstract class NavDrawerActivity extends AppCompatActivity {
 
         // Bind drawer layout to toolbar
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.nav_open, R.string.nav_close);
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.nav_open,
+            R.string.nav_close);
+
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         // Setup navigation drawer events
-        NavigationView navContent = findViewById(R.id.navContent);
-        navContent.setNavigationItemSelectedListener(this::onNavItemSelected);
+        NavigationView navView = findViewById(R.id.navContent);
+        navView.setNavigationItemSelectedListener(this::onNavItemSelected);
     }
 
-    protected boolean onNavItemSelected(MenuItem item) {
+    protected boolean onNavItemSelected(MenuItem item)
+    {
         String msg = getString(R.string.error_not_implemented);
 
         switch (item.getItemId()) {
@@ -45,10 +56,25 @@ public abstract class NavDrawerActivity extends AppCompatActivity {
                 break;
 
             case R.id.navAbout:
-                Dialog.toast(this, msg);
+                startActivity(AboutActivity.class);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void startActivity(Class<? extends Activity> activityClass)
+    {
+        startActivity(new Intent(this, activityClass));
     }
 }

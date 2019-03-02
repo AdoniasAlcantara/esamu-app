@@ -19,130 +19,156 @@ import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCall
 import org.myopenproject.esamu.R;
 import org.myopenproject.esamu.common.UserDto;
 import org.myopenproject.esamu.util.Dialog;
-import org.myopenproject.esamu.widget.CustomViewPager;
 
 import java.util.concurrent.TimeUnit;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity
+{
     private static final String TAG = "SIGNUP";
+
+    // Page index
     private static final int PAGE_INFO = 0;
     private static final int PAGE_PHONE = 1;
     private static final int PAGE_TOKEN = 2;
     private static final int NUM_PAGES = 3;
 
-    // Fragments (aka "pages")
-    private InfoFragment fragInfo;      // Shows some information to the user
-    private PhoneFragment fragPhone;    // Form with phone number
-    private TokenFragment fragToken;    // Form with confirmation token
+    // Fragments
+    private InfoFragment fragInfo;      // Shows useful information for the user
+    private PhoneFragment fragPhone;    // Asks the user to enter phone number
+    private TokenFragment fragToken;    // Asks the user to enter the received token
 
-    private CustomViewPager pager;
+    private SignUpViewPager pager;      // A custom pager
     private ProgressDialog progress;
 
-    private UserDto user; // The user to register
+    private UserDto user;               // The user to register
 
     @Override
-    protected void onCreate(Bundle bundle) {
+    protected void onCreate(Bundle bundle)
+    {
         super.onCreate(bundle);
         setContentView(R.layout.activity_signup);
 
-        // Set things up
         fragInfo = InfoFragment.newInstance();
         fragPhone = PhoneFragment.newInstance();
         fragToken = TokenFragment.newInstance();
 
+        // Set up pager
         pager = findViewById(R.id.signUpPager);
         pager.setPagingEnabled(false);
-        pager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        pager.setAdapter(new SingUpAdapter(getSupportFragmentManager()));
 
-        progress = new ProgressDialog(this);
-        progress.setCancelable(false);
-        progress.setTitle(R.string.dialog_wait);
-        progress.setMessage(getString(R.string.dialog_sending));
+        progress = Dialog.makeProgress(this, R.string.dialog_wait, R.string.dialog_sending);
 
         user = new UserDto();
     }
 
-    public void finishSuccess() {
+    public void finishSuccess()
+    {
         Dialog.toast(this, getString(R.string.signup_text_success));
         setResult(RESULT_OK);
         finish();
     }
 
-    public void finishUnsuccessful() {
+    public void finishUnsuccessful()
+    {
         Dialog.toast(this, getString(R.string.signup_text_unsuccessful));
         finish();
     }
 
-    public void showPhonePage() {
+    public void showPhonePage()
+    {
         pager.setCurrentItem(PAGE_PHONE);
     }
 
-    public void sendPhone(String name, String phone) {
+    public void sendPhone(String name, String phone)
+    {
         progress.show();
         user.setName(name);
         user.setPhone(phone);
 
-        // Send phone number to Firebase
         Log.i(TAG, "Request phone verification for " + phone);
+
+        // Send phone number to Firebase
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phone, 60, TimeUnit.SECONDS, this, callbacks);
+            phone,              // The number to verify
+            60,                 // Maximum wait time
+            TimeUnit.SECONDS,   // The time in seconds
+            this,
+            callbacks);
     }
 
     // Phone number verification callbacks
     private OnVerificationStateChangedCallbacks callbacks =
-            new OnVerificationStateChangedCallbacks() {
-                @Override
-                public void onCodeSent(String id, ForceResendingToken forceResendingToken) {
-                    Log.i(TAG, "Token sent. ID " + id);
-                    fragToken.onTokenSent(user, id);
-                    pager.setCurrentItem(PAGE_TOKEN);
-                    progress.dismiss();
-                }
+        new OnVerificationStateChangedCallbacks()
+        {
+            @Override
+            public void onCodeSent(String id, ForceResendingToken forceResendingToken)
+            {
+                Log.i(TAG, "Token sent. ID " + id);
 
-                @Override
-                public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-                    fragToken.authenticate(phoneAuthCredential);
-                }
+                fragToken.onTokenSent(user, id);
+                pager.setCurrentItem(PAGE_TOKEN);
+                progress.dismiss();
+            }
 
-                @Override
-                public void onVerificationFailed(FirebaseException e) {
-                    Log.e(TAG, "Phone number verification failed", e);
-                    progress.dismiss();
+            @Override
+            public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential)
+            {
+                fragToken.authenticate(phoneAuthCredential);
+            }
 
-                    // Error checking
-                    if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                        // Malformed phone number
-                        fragPhone.showInvalidPhone();
+            @Override
+            public void onVerificationFailed(FirebaseException e)
+            {
+                Log.e(TAG, "Phone number verification failed", e);
+                progress.dismiss();
+
+                // Checking what happened
+                if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                    // Malformed phone number
+                    fragPhone.showInvalidPhone();
+                } else {
+                    int title;
+                    int message;
+
+                    if (e instanceof FirebaseApiNotAvailableException) {
+                        // Maybe Google play isn't installed
+                        title = R.string.error_googleplay_title;
+                        message = R.string.error_googleplay_msg;
                     } else {
-                        int title;
-                        int message;
-
-                        if (e instanceof FirebaseApiNotAvailableException) {
-                            // Google play isn't installed
-                            title = R.string.error_googleplay_title;
-                            message = R.string.error_googleplay_msg;
-                        } else {
-                            // SMS quota was exceeded
-                            title = R.string.error_unavailable_title;
-                            message = R.string.signup_error_sms_exceeded;
-                        }
-
-                        Log.e("AUTH", e.getMessage());
-                        // Show an error dialog and exit the activity
-                        Dialog.alert(SignUpActivity.this, title, message,
-                                (dialog, which) -> finishUnsuccessful());
+                        // SMS quota was exceeded
+                        title = R.string.error_unavailable_title;
+                        message = R.string.signup_error_sms_exceeded;
                     }
-                }
-            };
 
-    // Adapter for sign up pages
-    private class PagerAdapter extends FragmentStatePagerAdapter {
-        PagerAdapter(FragmentManager fm) {
+                    Log.e("AUTH", e.getMessage());
+
+                    // Show an error dialog and exit the activity
+                    Dialog.alert(
+                        SignUpActivity.this,
+                        title,
+                        message,
+                        (dialog, which) -> finishUnsuccessful());
+                }
+            }
+
+            @Override
+            public void onCodeAutoRetrievalTimeOut(String s)
+            {
+                // TODO
+            }
+        };
+
+    private class SingUpAdapter extends FragmentStatePagerAdapter
+    {
+        SingUpAdapter(FragmentManager fm)
+        {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int i) {
+        public Fragment getItem(int i)
+        {
             switch (i) {
                 case PAGE_INFO: return fragInfo;
                 case PAGE_PHONE: return fragPhone;
@@ -152,7 +178,8 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return NUM_PAGES;
         }
     }

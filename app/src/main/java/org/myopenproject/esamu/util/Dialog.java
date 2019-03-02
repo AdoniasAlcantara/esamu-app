@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
-import android.support.design.widget.BottomSheetDialog;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,8 +12,7 @@ import android.widget.Toast;
 import org.myopenproject.esamu.R;
 
 public class Dialog {
-    private Dialog() {
-    }
+    private Dialog() {}
 
     public static void toast(Context context, String message) {
         Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);

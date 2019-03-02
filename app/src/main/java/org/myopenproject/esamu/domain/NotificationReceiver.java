@@ -10,6 +10,7 @@ import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 
 import org.json.JSONObject;
+import org.myopenproject.esamu.App;
 import org.myopenproject.esamu.presentation.firstaid.FirstAidActivity;
 
 public class NotificationReceiver implements
@@ -21,8 +22,10 @@ public class NotificationReceiver implements
     public void notificationReceived(OSNotification notification) {
         JSONObject data = notification.payload.additionalData;
 
+        // Validate data params
+
         if (data == null) {
-            Log.w(TAG, "Notification received but no data content");
+            Log.w(TAG, "Notification received but no content");
             return;
         }
 
@@ -49,8 +52,7 @@ public class NotificationReceiver implements
                 record.setStatus(EmergencyRecord.Status.valueOf(status));
                 record.setAttachment(attach);
                 gateway.update(record);
-                app.getBus().post("refreshHistory");
-                Log.w(TAG, "Emergency has been updated. Id " + id);
+                app.getBus().post(App.BUS_REFRESH_HISTORY);
             } else {
                 Log.w(TAG, "Emergency not found. Id " + id);
             }
@@ -68,6 +70,7 @@ public class NotificationReceiver implements
                 && data != null) {
             int attach = data.optInt("attach", -1);
 
+            // When there is any attach, then show up firstAidActivity
             if (attach >= 0) {
                 App app = App.getInstance();
                 Intent it = new Intent(app, FirstAidActivity.class);

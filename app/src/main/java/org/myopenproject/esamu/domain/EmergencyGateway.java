@@ -15,6 +15,7 @@ public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable 
     private static final String TAG = "SQL";
     private static final String DB_NAME = "esamu";
     private static final int DB_VERSION = 1;
+
     private SQLiteDatabase db;
 
     public EmergencyGateway(Context context) {
@@ -36,8 +37,7 @@ public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
     public void create(EmergencyRecord emergency) {
         db.insert("tb_emergency", null, prepare(emergency));
@@ -50,7 +50,7 @@ public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable 
         return count > 0;
     }
 
-    public boolean remove(int id) {
+    public boolean remove(long id) {
         String[] idStr = new String[] {String.valueOf(id)};
         int count = db.delete("tb_emergency", "id=?", idStr);
 

@@ -24,7 +24,7 @@ import org.myopenproject.esamu.R;
 import org.myopenproject.esamu.common.ResponseDto;
 import org.myopenproject.esamu.common.UserDto;
 import org.myopenproject.esamu.domain.EmergencyService;
-import org.myopenproject.esamu.domain.App;
+import org.myopenproject.esamu.App;
 import org.myopenproject.esamu.util.Device;
 import org.myopenproject.esamu.util.Dialog;
 

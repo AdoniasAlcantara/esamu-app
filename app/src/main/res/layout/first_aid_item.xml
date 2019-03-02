@@ -23,9 +23,10 @@
             <TextView
                 android:id="@+id/firstAidNumber"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/ic_first_aid_item"
+                android:gravity="center"
                 android:paddingStart="14dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="14dp"

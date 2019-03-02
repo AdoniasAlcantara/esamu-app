@@ -15,7 +15,7 @@
         android:fontFamily="@font/ubuntu_medium"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/main_title_size"
+        android:textSize="@dimen/text_brand"
         android:text="@string/main_title" />
 
     <LinearLayout

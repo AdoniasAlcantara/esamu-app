@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.signup.SignUpActivity">
 
-    <org.myopenproject.esamu.widget.CustomViewPager
+    <org.myopenproject.esamu.presentation.signup.SignUpViewPager
         android:id="@+id/signUpPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

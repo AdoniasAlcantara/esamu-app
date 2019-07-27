@@ -24,9 +24,9 @@ import java.util.concurrent.TimeUnit;
 
 public class SignUpActivity extends AppCompatActivity
 {
-    private static final String TAG = "SIGNUP";
+    private static final String TAG = "SIGN_UP";
 
-    // Page index
+    // ViewPager index
     private static final int PAGE_INFO = 0;
     private static final int PAGE_PHONE = 1;
     private static final int PAGE_TOKEN = 2;
@@ -34,10 +34,10 @@ public class SignUpActivity extends AppCompatActivity
 
     // Fragments
     private InfoFragment fragInfo;      // Shows useful information for the user
-    private PhoneFragment fragPhone;    // Asks the user to enter phone number
-    private TokenFragment fragToken;    // Asks the user to enter the received token
+    private PhoneFragment fragPhone;    // Ask the user to enter phone number
+    private TokenFragment fragToken;    // Ask the user to enter the received token
 
-    private SignUpViewPager pager;      // A custom pager
+    private SignUpViewPager pager;      // A custom ViewPager
     private ProgressDialog progress;
 
     private UserDto user;               // The user to register
@@ -48,11 +48,11 @@ public class SignUpActivity extends AppCompatActivity
         super.onCreate(bundle);
         setContentView(R.layout.activity_signup);
 
-        fragInfo = InfoFragment.newInstance();
-        fragPhone = PhoneFragment.newInstance();
-        fragToken = TokenFragment.newInstance();
+        fragInfo = new InfoFragment();
+        fragPhone = new PhoneFragment();
+        fragToken = new TokenFragment();
 
-        // Set up pager
+        // Set up ViewPager
         pager = findViewById(R.id.signUpPager);
         pager.setPagingEnabled(false);
         pager.setAdapter(new SingUpAdapter(getSupportFragmentManager()));
@@ -141,7 +141,7 @@ public class SignUpActivity extends AppCompatActivity
                         message = R.string.signup_error_sms_exceeded;
                     }
 
-                    Log.e("AUTH", e.getMessage());
+                    Log.e(TAG, e.getMessage());
 
                     // Show an error dialog and exit the activity
                     Dialog.alert(

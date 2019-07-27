@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
 
@@ -9,11 +10,17 @@
             android:title="@string/nav_home" />
 
         <item
-            android:id="@+id/navSettings"
-            android:title="@string/nav_settings" />
+            android:id="@+id/navHistory"
+            android:title="@string/nav_history" />
 
-        <item
-            android:id="@+id/navAbout"
-            android:title="@string/nav_about" />
     </group>
+
+    <item
+        android:id="@+id/navProfile"
+        android:title="@string/nav_profile" />
+
+    <item
+        android:id="@+id/navAbout"
+        android:title="@string/nav_about" />
+
 </menu>

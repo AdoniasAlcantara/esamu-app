@@ -20,6 +20,7 @@
     <string name="signup_button_next">Continuar</string>
     <string name="signup_button_confirm">Concluir</string>
     <string name="signup_text_success">Pronto!</string>
+    <string name="signup_text_phone_mask">( NN ) NNNNN - NNNN</string>
     <string name="signup_text_unsuccessful">Não foi possível concluir o cadastro</string>
     <string name="signup_error_invalid_phone">O número do telefone é inválido</string>
     <string name="signup_error_sms_exceeded">A quota de SMS foi excedida</string>
@@ -50,7 +51,8 @@
     <!-- Navigation drawer -->
     <string name="nav_header_brand">e-SAMU</string>
     <string name="nav_home">Principal</string>
-    <string name="nav_settings">Configurações</string>
+    <string name="nav_history">Histórico</string>
+    <string name="nav_profile">Perfil</string>
     <string name="nav_about">Sobre</string>
     <string name="nav_open">Abrir</string>
     <string name="nav_close">Fechar</string>

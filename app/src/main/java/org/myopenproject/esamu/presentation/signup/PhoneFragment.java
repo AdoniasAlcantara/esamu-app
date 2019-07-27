@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,57 +18,61 @@ import org.myopenproject.esamu.util.Device;
 import org.myopenproject.esamu.util.Dialog;
 
 @SuppressWarnings("ConstantConditions")
-public class PhoneFragment extends Fragment {
+public class PhoneFragment extends Fragment
+{
     private SignUpActivity activity;
 
     // Views for pick up user's phone number and username
     private TextInputLayout inputName;
     private TextInputLayout inputPhone;
 
-    public PhoneFragment() {}
-
-    public static PhoneFragment newInstance() {
-        return new PhoneFragment();
-    }
-
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
 
-        if (context instanceof SignUpActivity)
+        if (context instanceof SignUpActivity) {
             activity = (SignUpActivity) context;
-        else
+        } else {
             throw new RuntimeException("Activity class must be " + SignUpActivity.class.getName());
+        }
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle bundle)
+    {
         View view = inflater.inflate(R.layout.fragment_phone, container, false);
         view.findViewById(R.id.signUpPhoneButtonNext).setOnClickListener(v -> validate());
         inputName = view.findViewById(R.id.signUpInputName);
         inputPhone = view.findViewById(R.id.signUpInputPhone);
 
-        // Adding mask to the phone input
-        EditText et = inputPhone.getEditText();
-        SimpleMaskFormatter smf = new SimpleMaskFormatter("( NN ) NNNNN - NNNN");
-        MaskTextWatcher mtw = new MaskTextWatcher(et, smf);
-        et.addTextChangedListener(mtw);
+        // Set up mask for phone input
+        EditText editText = inputPhone.getEditText();
+
+        MaskTextWatcher mtw = new MaskTextWatcher(
+            editText,
+            new SimpleMaskFormatter(getString(R.string.signup_text_phone_mask)));
+
+        editText.addTextChangedListener(mtw);
 
         return view;
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDetach()
+    {
         activity = null;
+        super.onDetach();
     }
 
-    public void showInvalidPhone() {
+    public void showInvalidPhone()
+    {
         inputPhone.setError(getString(R.string.signup_error_invalid_phone));
         inputPhone.requestFocus();
     }
 
-    private void validate() {
+    private void validate()
+    {
         // Validate name
         String name = inputName.getEditText().getText().toString().trim();
 
@@ -85,10 +88,11 @@ public class PhoneFragment extends Fragment {
         String phone = inputPhone.getEditText().getText().toString().replaceAll("[ ()-]", "");
 
         if (!phone.matches("\\d{10,}")) {
-            if (phone.isEmpty())
+            if (phone.isEmpty()) {
                 inputPhone.setError(getString(R.string.error_empty));
-            else
+            } else {
                 inputPhone.setError(String.format(getString(R.string.error_numeric_min), 10));
+            }
 
             inputPhone.requestFocus();
             return;
@@ -102,7 +106,7 @@ public class PhoneFragment extends Fragment {
             return;
         }
 
-        // Include country code prefix
+        // Include country code prefix and send
         activity.sendPhone(name, getString(R.string.country_code) + phone);
     }
 }

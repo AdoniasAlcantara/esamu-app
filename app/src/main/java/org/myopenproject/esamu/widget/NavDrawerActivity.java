@@ -8,15 +8,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import org.myopenproject.esamu.R;
-import org.myopenproject.esamu.presentation.settings.AboutActivity;
-import org.myopenproject.esamu.util.Dialog;
 
 public abstract class NavDrawerActivity extends AppCompatActivity
 {
     protected DrawerLayout drawerLayout;
+    private NavigationView navView;
 
     @SuppressWarnings("ConstantConditions")
     protected void setupToolbarAndNavDrawer()
@@ -38,29 +38,8 @@ public abstract class NavDrawerActivity extends AppCompatActivity
         toggle.syncState();
 
         // Setup navigation drawer events
-        NavigationView navView = findViewById(R.id.navContent);
+        navView = findViewById(R.id.navContent);
         navView.setNavigationItemSelectedListener(this::onNavItemSelected);
-    }
-
-    protected boolean onNavItemSelected(MenuItem item)
-    {
-        String msg = getString(R.string.error_not_implemented);
-
-        switch (item.getItemId()) {
-            case R.id.navHome:
-                Dialog.toast(this, msg);
-                break;
-
-            case R.id.navSettings:
-                Dialog.toast(this, msg);
-                break;
-
-            case R.id.navAbout:
-                startActivity(AboutActivity.class);
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     @Override
@@ -73,8 +52,19 @@ public abstract class NavDrawerActivity extends AppCompatActivity
         }
     }
 
-    private void startActivity(Class<? extends Activity> activityClass)
+    protected void setSelectedItem(int item)
+    {
+        Menu menu = navView.getMenu();
+
+        if (item >= 0 && item < menu.size()) {
+            menu.getItem(item).setChecked(true);
+        }
+    }
+
+    protected void startActivity(Class<? extends Activity> activityClass)
     {
         startActivity(new Intent(this, activityClass));
     }
+
+    protected abstract boolean onNavItemSelected(MenuItem item);
 }

@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == REQUEST_SIGN_UP && resultCode == RESULT_OK) {
             startHome();
         } else {
+            // TODO
             finish();
         }
     }

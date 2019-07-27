@@ -39,11 +39,15 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_padding"
         android:theme="@style/TextInput"
+        app:counterEnabled="true"
+        app:counterMaxLength="6"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_token"
+            android:drawablePadding="8dp"
             android:hint="@string/signup_label_token"
             android:inputType="number"
             android:maxLength="6"

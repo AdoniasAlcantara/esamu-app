@@ -10,37 +10,36 @@ import android.view.ViewGroup;
 
 import org.myopenproject.esamu.R;
 
-public class InfoFragment extends Fragment {
+public class InfoFragment extends Fragment
+{
     private SignUpActivity activity;
 
-    public InfoFragment() {}
-
-    public static InfoFragment newInstance() {
-        return new InfoFragment();
-    }
-
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
 
-        if (context instanceof SignUpActivity)
+        if (context instanceof SignUpActivity) {
             activity = (SignUpActivity) context;
-        else
+        } else {
             throw new RuntimeException("Activity class must be " + SignUpActivity.class.getName());
+        }
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle bundle)
+    {
         View view = inflater.inflate(R.layout.fragment_info, container, false);
         view.findViewById(R.id.signUpInfoButtonNext)
-                .setOnClickListener(v -> activity.showPhonePage());
+            .setOnClickListener(v -> activity.showPhonePage());
 
         return view;
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDetach()
+    {
         activity = null;
+        super.onDetach();
     }
 }

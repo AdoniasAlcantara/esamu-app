@@ -13,18 +13,22 @@
     <string name="signup_title">Verifique seu número</string>
     <string name="signup_text_info">Para oferecer um atendimento aprimorado, o e-SAMU requer que seja realizada a verificação em duas etapas, a qual exigirá o registro do seu número de telefone.</string>
     <string name="signup_text_fill">Preencha os campos abaixo com suas informações. O e-SAMU enviará um código SMS para verificar o número de telefone.</string>
-    <string name="signup_text_sms_sent">SMS enviado para %s. Insira o código de verificação recebido ou aguarde a detecção automática.</string>
+    <string name="signup_sms_sent">SMS enviado para %s. Insira o código de verificação recebido ou aguarde a detecção automática.</string>
     <string name="signup_label_name">Nome</string>
     <string name="signup_label_phone">Telefone</string>
     <string name="signup_label_token">Código de verificação</string>
     <string name="signup_button_next">Continuar</string>
     <string name="signup_button_confirm">Concluir</string>
-    <string name="signup_text_success">Pronto!</string>
+    <string name="signup_change_phone">Não é o seu número?\nVocê pode alterá-lo aqui.</string>
+    <string name="signup_success">Pronto!</string>
     <string name="signup_text_phone_mask">( NN ) NNNNN - NNNN</string>
     <string name="signup_text_unsuccessful">Não foi possível concluir o cadastro</string>
     <string name="signup_error_invalid_phone">O número do telefone é inválido</string>
     <string name="signup_error_sms_exceeded">A quota de SMS foi excedida</string>
     <string name="signup_error_auth">Código de verificação incorreto</string>
+    <string name="signup_error_expiration_time_title">Tempo expirado</string>
+    <string name="signup_error_expiration_time_retry">Deseja tentar novamente?</string>
+    <string name="signup_error_auth_failure">Falha ao tentar enviar o código de verificação</string>
 
     <!-- Home -->
     <string name="home_title">HomeActivity</string>
@@ -115,6 +119,7 @@
     <string name="error_unknown">Erro desconhecido</string>
     <string name="error_permission_title">Permissão</string>
     <string name="error_permission_camera">Você não concedeu permissão para utilizar a camera</string>
+    <string name="error_auth">Falha de autenticação</string>
 
     <!-- Phone number code by country -->
     <string name="country_code">+55</string>

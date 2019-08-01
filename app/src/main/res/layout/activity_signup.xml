@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.signup.SignUpActivity">
+    tools:context=".ui.signup.SignUpActivity">
 
-    <org.myopenproject.esamu.presentation.signup.SignUpViewPager
+    <org.myopenproject.esamu.widget.LockableViewPager
         android:id="@+id/signUpPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

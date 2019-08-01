@@ -33,7 +33,7 @@ public class Dialog {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
         builder.setTitle(title);
-        builder.setPositiveButton("OK", listener);
+        builder.setPositiveButton(android.R.string.ok, listener);
 
         if (message > 0)
             builder.setMessage(message);

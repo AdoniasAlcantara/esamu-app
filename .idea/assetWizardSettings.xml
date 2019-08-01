@@ -198,7 +198,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/opt/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_lock_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/opt/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_phonelink_lock_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -209,9 +209,11 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="b6b6b6" />
-                            <entry key="outputName" value="ic_token" />
+                            <entry key="height" value="96" />
+                            <entry key="outputName" value="ic_phone_lock" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="$USER_HOME$" />
+                            <entry key="width" value="96" />
                           </map>
                         </option>
                       </PersistentState>

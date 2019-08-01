@@ -6,7 +6,7 @@
     android:background="@android:color/black"
     android:orientation="horizontal"
     android:transitionName="transitionPicture"
-    tools:context=".presentation.emergency.CameraActivity">
+    tools:context=".ui.emergency.CameraActivity">
 
     <RelativeLayout
         android:layout_width="0dp"

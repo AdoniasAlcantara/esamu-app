@@ -32,7 +32,7 @@
             android:value="DISABLE" />
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme">
             <intent-filter>
@@ -42,35 +42,35 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.settings.SettingsActivity" />
+        <activity android:name=".ui.settings.SettingsActivity" />
 
         <activity
-            android:name=".presentation.settings.AboutActivity"
+            android:name=".ui.settings.AboutActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".presentation.signup.SignUpActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:label="@string/signup_title"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".presentation.home.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NavDrawer" />
 
         <activity
-            android:name=".presentation.emergency.EmergencyActivity"
+            android:name=".ui.emergency.EmergencyActivity"
             android:label="@string/emergency_title"
-            android:parentActivityName=".presentation.home.HomeActivity"
+            android:parentActivityName=".ui.home.HomeActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".presentation.emergency.CameraActivity"
+            android:name=".ui.emergency.CameraActivity"
             android:screenOrientation="fullUser"
             android:theme="@style/FullScreenTheme" />
 
         <activity
-            android:name=".presentation.firstaid.FirstAidActivity"
+            android:name=".ui.firstaid.FirstAidActivity"
             android:label="@string/firstaid_title"
             android:screenOrientation="portrait" />
     </application>

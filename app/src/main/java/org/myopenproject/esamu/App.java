@@ -7,8 +7,8 @@ import android.content.SharedPreferences;
 import com.onesignal.OneSignal;
 import com.squareup.otto.Bus;
 
-import org.myopenproject.esamu.common.UserDto;
-import org.myopenproject.esamu.domain.NotificationReceiver;
+import org.myopenproject.esamu.data.dto.UserDto;
+import org.myopenproject.esamu.data.model.NotificationReceiver;
 
 public class App extends Application
 {

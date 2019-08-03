@@ -3,15 +3,16 @@ package org.myopenproject.esamu.ui.emergency;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import org.myopenproject.esamu.R;
 import org.myopenproject.esamu.util.Device;
@@ -26,56 +27,58 @@ import java.io.OutputStream;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class CameraActivity extends AppCompatActivity
-{
-    private static final String TAG = "CAMERA";
+public class CameraActivity extends AppCompatActivity {
+    private static final String TAG = "Camera";
 
-    // Parameter to know if this is the first time the user takes a photo
+    // If this is the first time user take the photo
     public static final String PARAM_IS_PICTURE_TAKEN = "isPictureTaken";
 
     // Returned after picture is taken
     public static final String RET_IMAGE = "pictureTaken";
 
-    private static final int REQUEST_PERMISSION_CAMERA = 1;
-
-    // Range of resolutions allowed
+    // Allowed resolutions range
     private static final int RESOLUTION_MAX = 1280;
     private static final int RESOLUTION_MIN = 640;
 
     private Camera camera;
+    private ProgressBar progress;
 
     @Override
-    protected void onCreate(Bundle bundle)
-    {
+    protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_camera);
 
-        // Check runtime permissions
-        if (Permission.validate(this, REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA)) {
+        // Prevent user to take screenshot
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE);
+
+        // Check runtime permission
+        if (Permission.checkPermission(this, Manifest.permission.CAMERA)) {
             setupCamera();
         }
 
         // Set up button event
-        ImageButton buttonTakePicture = findViewById(R.id.cameraButtonTakePicture);
-        buttonTakePicture.setOnClickListener(v -> {
+        ImageButton btnTakePicture = findViewById(R.id.cameraBtnTakePicture);
+        btnTakePicture.setOnClickListener(v -> {
+            progress.setVisibility(View.VISIBLE);
+
             // Prevent user from tapping button more than once
-            buttonTakePicture.setEnabled(false);
+            btnTakePicture.setEnabled(false);
 
             // Prevent user from rotating device while the picture is being taking
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-            // Camera's callbacks
-            camera.takePicture(
-                null,
-                null,
-                (data, cam) -> {
-                    camera.release();
-                    onPictureTaken(data);
-                }
-            );
+            // Camera callbacks
+            camera.takePicture(null, null, (data, cam) -> {
+                camera.release();
+                onPictureTaken(data);
+            });
         });
 
-        // Show a sign when the picture is taken for the first time
+        progress = findViewById(R.id.cameraProgress);
+
+        // Show a dialog when the photo is first taken
         boolean isPictureTaken = getIntent().getBooleanExtra(PARAM_IS_PICTURE_TAKEN, false);
 
         if (!isPictureTaken) {
@@ -84,8 +87,7 @@ public class CameraActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         if (camera != null) {
             camera.release();
         }
@@ -93,29 +95,7 @@ public class CameraActivity extends AppCompatActivity
         super.onDestroy();
     }
 
-    @Override
-    public void onRequestPermissionsResult(
-        int requestCode,
-        @NonNull String[] permissions,
-        @NonNull int[] grantResults)
-    {
-        if (requestCode == REQUEST_PERMISSION_CAMERA
-            && grantResults.length > 0
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-        {
-            setupCamera();
-        } else {
-            Dialog.alert(
-                this,
-                R.string.error_permission_title,
-                R.string.error_permission_camera,
-                (dialog, which) -> finish()
-            );
-        }
-    }
-
-    private void setupCamera()
-    {
+    private void setupCamera() {
         camera = Device.getCamera(this);
         Camera.Parameters params = camera.getParameters();
 
@@ -132,37 +112,37 @@ public class CameraActivity extends AppCompatActivity
 
         // Install preview in the camera
         CameraPreview preview = new CameraPreview(this, camera);
-        ViewGroup layoutPreview = findViewById(R.id.cameraLayoutPreview);
-        layoutPreview.addView(preview);
+        ViewGroup previewHolder = findViewById(R.id.cameraPreview);
+        previewHolder.addView(preview);
     }
 
-    private void onPictureTaken(byte[] data)
-    {
-        // Get current rotation and unlock screen orientation
-        int rotation = Device.getRotation(this);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER);
+    private void onPictureTaken(byte[] data) {
+        new Thread(() -> {
+            // Get current rotation and unlock screen orientation
+            int rotation = Device.getRotation(this);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER);
 
-        Log.d(TAG, "Image bytes: " + data.length);
+            Log.d(TAG, "Image bytes: " + data.length);
 
-        // Fix image rotation on Samsung and Sony devices
-        Bitmap bitmap = Image.fixRotation(data, rotation);
+            // Fix image rotation on Samsung and Sony devices
+            Bitmap bitmap = Image.fixRotation(data, rotation);
 
-        try {
-            // Save it and return the resulting image path
-            String path = tempImage(bitmap, "picture");
-            Intent result = new Intent();
-            result.putExtra(RET_IMAGE, path);
-            setResult(RESULT_OK, result);
-        } catch (IOException e) {
-            Log.e(TAG, "Cannot save temp image", e);
-        }
+            try {
+                // Save it and return the resulting image path
+                String path = tempImage(bitmap, "picture");
+                Intent result = new Intent();
+                result.putExtra(RET_IMAGE, path);
+                setResult(RESULT_OK, result);
+            } catch (IOException e) {
+                Log.e(TAG, "Cannot save temp image", e);
+            }
 
-        finish();
+            runOnUiThread(this::finish);
+        }).run();
     }
 
     // Create temporary file and return the absolute file path
-    public String tempImage(Bitmap bitmap, String name) throws IOException
-    {
+    public String tempImage(Bitmap bitmap, String name) throws IOException {
         File outputDir = getCacheDir();
         File imageFile = new File(outputDir, name + ".jpg");
         OutputStream os = new FileOutputStream(imageFile);

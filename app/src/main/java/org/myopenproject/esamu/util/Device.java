@@ -111,7 +111,7 @@ public class Device {
         return addr;
     }
 
-    public static void doPhoneCall(Activity activity, String phoneNumber) {
+    public static void makePhoneCall(Activity activity, String phoneNumber) {
         Intent it = new Intent();
         it.setAction(Intent.ACTION_CALL);
         it.setData(Uri.parse("tel:" + phoneNumber));

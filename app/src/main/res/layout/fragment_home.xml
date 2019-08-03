@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.MainFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
         android:text="@string/home_text_info"/>
 
     <pl.bclogic.pulsator4droid.library.PulsatorLayout
-        android:id="@+id/homePulsator"
+        android:id="@+id/homelytPulsator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:pulse_count="1"
@@ -26,7 +26,7 @@
         app:pulse_interpolator="Linear" />
 
     <org.myopenproject.esamu.widget.CountDownButton
-        android:id="@+id/homeButtonEmergency"
+        android:id="@+id/homeBtnEmergency"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerInParent="true"
@@ -38,7 +38,7 @@
         app:textScaleFactor="4" />
 
     <com.omega_r.libs.OmegaCenterIconButton
-        android:id="@+id/homeButtonCancel"
+        android:id="@+id/homeBtnCancel"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="-60dp"

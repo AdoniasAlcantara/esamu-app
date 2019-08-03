@@ -7,21 +7,22 @@
     tools:context=".ui.home.HistoryFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/historyRecycler"
+        android:id="@+id/historyRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="@dimen/activity_padding"
         android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_history" />
 
     <TextView
-        android:id="@+id/historyTextEmpty"
+        android:id="@+id/historyTvEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:text="@string/history_card_text_empty"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </RelativeLayout>

@@ -31,7 +31,7 @@
     <string name="signup_error_auth_failure">Falha ao tentar enviar o código de verificação</string>
 
     <!-- Home -->
-    <string name="home_title">HomeActivity</string>
+    <string name="home_title">e-SAMU</string>
     <string name="home_tab_main">Principal</string>
     <string name="home_tab_history">Histórico</string>
     <string name="home_button_emergency">Emergência</string>
@@ -40,16 +40,14 @@
 
     <!-- History card -->
     <string name="history_card_title_default">Status indefinido</string>
-    <string name="history_card_time">Horário: %s.</string>
-    <string name="history_card_time_default">Horário: indefinido.</string>
-    <string name="history_card_location">Local: %s.</string>
-    <string name="history_card_location_default">Local: indefinido.</string>
+    <string name="history_card_time_default">Data/Horário</string>
+    <string name="history_card_location_default">Local</string>
     <string name="history_card_button_attach">Ver primeiros socorros</string>
     <string name="history_card_button_delete">Apagar</string>
-    <string name="history_card_status_pendent">Aguardando atendimento</string>
-    <string name="history_card_status_progress">Resgate em andamento</string>
-    <string name="history_card_status_finished">Concluído</string>
-    <string name="history_card_status_canceled">Solicitação cancelada</string>
+    <string name="history_status_pendent">Aguardando atendimento</string>
+    <string name="history_status_progress">Resgate em andamento</string>
+    <string name="history_status_finished">Concluído</string>
+    <string name="history_status_canceled">Solicitação cancelada</string>
     <string name="history_card_text_empty">Não há registro de emergência</string>
 
     <!-- Navigation drawer -->
@@ -71,12 +69,15 @@
     <string name="emergency_text_ready_title">Pronto!</string>
     <string name="emergency_text_ready_msg">Envie a solicitação agora.</string>
     <string name="emergency_hint_picture">Foto de emergência</string>
-    <string name="emergency_toast_back_pressed">Pressione voltar novamente para cancelar a solicitação.</string>
-    <string name="emergency_dialog_sent_title">Solicitação enviada</string>
-    <string name="emergency_dialog_sent_msg">Aguarde o atendimento do SAMU em alguns instantes.</string>
+    <string name="emergency_back_pressed">Pressione voltar novamente para cancelar a solicitação.</string>
+    <string name="emergency_sent_title">Solicitação enviada</string>
+    <string name="emergency_sent_msg">Aguarde o atendimento do SAMU em alguns instantes.</string>
     <string name="emergency_dialog_suggest_call">Deseja iniciar uma ligação com o SAMU 192 agora?</string>
     <string name="emergency_dialog_call_192">Discar 192</string>
     <string name="emergency_progress_msg">Obtendo localização… (%s)</string>
+    <string name="emergency_location_accuracy_title">Habilitar localização</string>
+    <string name="emergency_location_accuracy_msg">É necessário habilitar a localização de alta precisão para prosseguir.</string>
+    <string name="emergency_location_enable_high_accuracy">Ativar alta precisão</string>
 
     <!-- Camera -->
     <string name="camera_text_take_picture">Tire uma foto</string>
@@ -92,8 +93,6 @@
     <string name="fa_0_1">Procedimentos de primeiros socorros aqui.</string>
     <string name="fa_0_2">Procedimentos de primeiros socorros aqui.</string>
 
-    <!-- Misc -->
-
     <!-- Dialog -->
     <string name="dialog_ok">OK</string>
     <string name="dialog_yes">Sim</string>
@@ -102,6 +101,7 @@
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_wait">Por favor, aguarde.</string>
     <string name="dialog_sending">Enviando…</string>
+    <string name="dialog_finish">Encerrar</string>
 
     <!-- Error -->
     <string name="error_empty">Campo obrigatório</string>
@@ -120,8 +120,5 @@
     <string name="error_permission_title">Permissão</string>
     <string name="error_permission_camera">Você não concedeu permissão para utilizar a camera</string>
     <string name="error_auth">Falha de autenticação</string>
-
-    <!-- Phone number code by country -->
-    <string name="country_code">+55</string>
 
 </resources>

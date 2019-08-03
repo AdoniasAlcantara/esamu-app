@@ -5,6 +5,9 @@
     <!-- Margin, padding... -->
     <dimen name="activity_padding">16dp</dimen>
 
+    <!-- Toolbar and tabs -->
+    <dimen name="toolbar_elevation">4dp</dimen>
+
     <!-- Button -->
     <dimen name="button_height">60dp</dimen>
     <dimen name="button_card_padding_horizontal">16dp</dimen>

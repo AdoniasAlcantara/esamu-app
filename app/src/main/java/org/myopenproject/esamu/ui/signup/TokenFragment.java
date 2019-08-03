@@ -26,8 +26,8 @@ import com.onesignal.OneSignal;
 import org.myopenproject.esamu.App;
 import org.myopenproject.esamu.R;
 import org.myopenproject.esamu.data.dto.UserDto;
-import org.myopenproject.esamu.data.service.ApiError;
 import org.myopenproject.esamu.data.service.ErrorDecoder;
+import org.myopenproject.esamu.data.service.Message;
 import org.myopenproject.esamu.data.service.ServiceFactory;
 import org.myopenproject.esamu.data.service.UserService;
 import org.myopenproject.esamu.util.Device;
@@ -191,9 +191,10 @@ public class TokenFragment extends Fragment {
                         listener.finishSuccess();
                     }
                 } else {
-                    ApiError error = ErrorDecoder.decode(response.errorBody());
-                    Log.d(TAG, "Returned with error code " + response.code() +
-                            ". Response: " + error);
+                    Message error = ErrorDecoder.decode(response.errorBody());
+                    Log.d(TAG, "Returned with error code " + response.code()
+                            + ", resource " + call.request().url().toString()
+                            + ". Response: " + error);
 
                     Dialog.alert(
                             getContext(),

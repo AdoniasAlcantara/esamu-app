@@ -14,14 +14,14 @@
         android:layout_weight="1">
 
         <FrameLayout
-            android:id="@+id/cameraLayoutPreview"
+            android:id="@+id/cameraPreview"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <ImageButton
-        android:id="@+id/cameraButtonTakePicture"
+        android:id="@+id/cameraBtnTakePicture"
         android:layout_width="80dp"
         android:layout_height="match_parent"
         android:background="@drawable/button_ripple_dark"

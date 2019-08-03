@@ -14,15 +14,15 @@ public class ErrorDecoder {
 
     private ErrorDecoder() {}
 
-    public static ApiError decode(ResponseBody responseBody) {
+    public static Message decode(ResponseBody responseBody) {
         if (responseBody == null) {
             return null;
         }
 
-        ApiError error = null;
+        Message error = null;
 
         try {
-             error = new Gson().fromJson(responseBody.string(), ApiError.class);
+             error = new Gson().fromJson(responseBody.string(), Message.class);
         } catch (JsonSyntaxException | IOException e) {
             Log.w(TAG, "Failed to decode error message", e);
         }

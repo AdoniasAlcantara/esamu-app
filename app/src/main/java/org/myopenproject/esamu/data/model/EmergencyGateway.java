@@ -11,16 +11,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable {
+public class EmergencyGateway extends SQLiteOpenHelper {
     private static final String TAG = "SQL";
     private static final String DB_NAME = "esamu";
     private static final int DB_VERSION = 1;
 
-    private SQLiteDatabase db;
-
     public EmergencyGateway(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        db = getWritableDatabase();
     }
 
     @Override
@@ -39,35 +36,48 @@ public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
-    public void create(EmergencyRecord emergency) {
-        db.insert("tb_emergency", null, prepare(emergency));
+    public boolean create(EmergencyRecord emergency) {
+        long result;
+        SQLiteDatabase db = getWritableDatabase();
+        result = db.insert("tb_emergency", null, prepare(emergency));
+        db.close();
+
+        return result > 0;
     }
 
     public boolean update(EmergencyRecord emergency) {
+        SQLiteDatabase db = getWritableDatabase();
         String[] idStr = new String[] {String.valueOf(emergency.getId())};
         int count = db.update("tb_emergency", prepare(emergency), "id=?", idStr);
+        db.close();
 
         return count > 0;
     }
 
     public boolean remove(long id) {
+        SQLiteDatabase db = getWritableDatabase();
         String[] idStr = new String[] {String.valueOf(id)};
         int count = db.delete("tb_emergency", "id=?", idStr);
+        db.close();
 
         return count > 0;
     }
 
     public EmergencyRecord find(long id) {
+        SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.query("tb_emergency", null, "id=" + id, null, null , null , null);
         EmergencyRecord e = null;
 
-        if (c.moveToFirst())
+        if (c.moveToFirst()) {
             e = fromRecord(c);
+        }
 
+        db.close();
         return e;
     }
 
     public List<EmergencyRecord> findAll() {
+        SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.query("tb_emergency", null, null, null, null, null, "id DESC");
         List<EmergencyRecord> emergencies = null;
 
@@ -79,13 +89,8 @@ public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable 
             } while (c.moveToNext());
         }
 
+        db.close();
         return emergencies;
-    }
-
-    @Override
-    public void close() {
-        if (db.isOpen())
-            db.close();
     }
 
     private ContentValues prepare(EmergencyRecord emergency) {
@@ -97,8 +102,9 @@ public class EmergencyGateway extends SQLiteOpenHelper implements AutoCloseable 
 
         String location = emergency.getLocation();
 
-        if (location != null)
+        if (location != null) {
             values.put("location", location);
+        }
 
         return values;
     }

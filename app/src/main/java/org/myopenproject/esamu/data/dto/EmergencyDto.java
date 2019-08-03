@@ -70,4 +70,17 @@ public class EmergencyDto {
     public void setVoice(String voice) {
         this.voice = voice;
     }
+
+    @Override
+    public String toString() {
+        return "EmergencyDto{" +
+                "userId='" + userId + '\'' +
+                ", imei='" + imei + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", picture='" + picture + '\'' +
+                ", video='" + video + '\'' +
+                ", voice='" + voice + '\'' +
+                '}';
+    }
 }

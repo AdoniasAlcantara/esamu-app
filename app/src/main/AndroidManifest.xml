@@ -55,8 +55,9 @@
 
         <activity
             android:name=".ui.home.HomeActivity"
+            android:label="@string/home_title"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NavDrawer" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.emergency.EmergencyActivity"

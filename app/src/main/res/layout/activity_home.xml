@@ -1,55 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navDrawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.home.HomeActivity"
-    tools:openDrawer="start">
+    android:orientation="vertical"
+    tools:context=".ui.home.HomeActivity">
 
-    <!-- Home contents -->
-    <LinearLayout
+    <include
+        layout="@layout/layout_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:orientation="vertical">
+        android:layout_height="wrap_content" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:elevation="3dp"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="@string/app_name" />
+    <android.support.design.widget.TabLayout
+        android:id="@+id/homeTabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/toolbar_elevation"
+        app:tabIndicatorColor="@color/tab_selected"
+        app:tabSelectedTextColor="@color/tab_selected"
+        app:tabTextColor="@color/tab_normal" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/homeTabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:elevation="3dp"
-            app:tabIndicatorColor="@color/tab_selected"
-            app:tabSelectedTextColor="@color/tab_selected"
-            app:tabTextColor="@color/tab_normal" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/homePager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/homePager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <!-- Navigation drawer -->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navContent"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_drawer_header"
-        app:menu="@menu/nav_drawer_menu" />
-
-</android.support.v4.widget.DrawerLayout>
+</LinearLayout>

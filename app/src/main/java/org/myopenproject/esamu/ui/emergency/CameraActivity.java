@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
@@ -49,9 +48,9 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         // Prevent user to take screenshot
-        getWindow().setFlags(
+        /*getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_SECURE,
-                WindowManager.LayoutParams.FLAG_SECURE);
+                WindowManager.LayoutParams.FLAG_SECURE);*/
 
         // Check runtime permission
         if (Permission.checkPermission(this, Manifest.permission.CAMERA)) {

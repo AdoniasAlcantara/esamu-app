@@ -81,16 +81,12 @@ public class PhoneFragment extends Fragment {
 
     private void validate() {
         if (isNameValid() && isPhoneValid() && isNetworkAvailable()) {
-            progress.show();
             Log.i(TAG, "Request phone verification for " + userDto.getPhone());
+            progress.show();
 
             // Verify phone number with Firebase
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                    userDto.getPhone(),
-                    60,
-                    TimeUnit.SECONDS,
-                    getActivity(),
-                    callbacks);
+                    userDto.getPhone(), 60, TimeUnit.SECONDS, getActivity(), callbacks);
         }
     }
 
@@ -111,7 +107,7 @@ public class PhoneFragment extends Fragment {
     private boolean isPhoneValid() {
         String phone = tilPhone.getEditText().getText().toString().replaceAll("[ ()-]", "");
 
-        if (!phone.matches("\\d{10,11}")) {
+        if (!phone.matches("\\d{11}")) {
             if (phone.isEmpty()) {
                 tilPhone.setError(getString(R.string.error_empty));
             } else {
@@ -140,7 +136,7 @@ public class PhoneFragment extends Fragment {
             new OnVerificationStateChangedCallbacks() {
                 @Override
                 public void onCodeSent(String id, ForceResendingToken forceResendingToken) {
-                    Log.i(TAG, "Token sent. ID " + id);
+                    Log.i(TAG, "Token sent to phone number " + userDto.getPhone() +". ID " + id);
                     progress.dismiss();
 
                     if (listener != null) {
@@ -150,6 +146,8 @@ public class PhoneFragment extends Fragment {
 
                 @Override
                 public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+                    Log.i(TAG, "Phone credential received");
+
                     if (listener != null) {
                         listener.authenticate(phoneAuthCredential);
                     }
@@ -157,6 +155,7 @@ public class PhoneFragment extends Fragment {
 
                 @Override
                 public void onVerificationFailed(FirebaseException e) {
+                    Log.e(TAG, "Phone verification failed", e);
                     progress.dismiss();
 
                     if (e instanceof FirebaseAuthInvalidCredentialsException) {
@@ -176,7 +175,6 @@ public class PhoneFragment extends Fragment {
                             message = R.string.signup_error_sms_exceeded;
                         }
 
-                        Log.e(TAG, "Authentication failed", e);
                         Dialog.alert(getContext(), title, message);
                     }
                 }
@@ -187,10 +185,8 @@ public class PhoneFragment extends Fragment {
                     new AlertDialog.Builder(getContext())
                             .setTitle(R.string.signup_error_expiration_time_title)
                             .setMessage(R.string.signup_error_expiration_time_retry)
-                            .setPositiveButton(
-                                    R.string.dialog_yes, (dialog, button) -> validate())
-                            .setNegativeButton(
-                                    R.string.dialog_no, (dialog, button) -> dialog.dismiss())
+                            .setPositiveButton(R.string.dialog_yes, (dialog, button) -> validate())
+                            .setNegativeButton(R.string.dialog_no, (dialog, button) -> dialog.dismiss())
                             .show();
                 }
             };

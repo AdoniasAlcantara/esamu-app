@@ -17,7 +17,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -109,9 +108,9 @@ public class EmergencyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_emergency);
 
         // Prevent user to take screenshot
-        getWindow().setFlags(
+        /*getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_SECURE,
-                WindowManager.LayoutParams.FLAG_SECURE);
+                WindowManager.LayoutParams.FLAG_SECURE);*/
 
         emergencyDto = new EmergencyDto();
 
@@ -221,8 +220,8 @@ public class EmergencyActivity extends AppCompatActivity {
 
                 // Pick only the most accurate location
                 if (location.getAccuracy() < mostAccurate) {
-                    emergencyDto.setLatitude(Double.toString(location.getLatitude()));
-                    emergencyDto.setLongitude(Double.toString(location.getLongitude()));
+                    emergencyDto.setLatitude(location.getLatitude());
+                    emergencyDto.setLongitude(location.getLongitude());
                     mostAccurate = location.getAccuracy();
                     isLocationKnown = true;
                 }
@@ -414,14 +413,13 @@ public class EmergencyActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 if (secondsRemaining * 1000 >= millisUntilFinished) {
-                    progress.setMessage(
-                            String.format(msg, Integer.toString(secondsRemaining--)));
+                    progress.setMessage(String.format(msg, Integer.toString(secondsRemaining--)));
                 }
 
                 if (isLocationKnown) {
                     cancel();
                     progress.dismiss();
-                    validate(); // Try again
+                    validate(); // Retry
                 }
             }
 

@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -145,32 +147,37 @@ public class TokenFragment extends Fragment {
 
         // Authenticate Firebase using credential
         FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        // Get user ID created by Firebase and OneSignal
-                        FirebaseUser firebaseUser = task.getResult().getUser();
+                .addOnCompleteListener(this::onAuthSuccess)
+                .addOnFailureListener(this::onAuthFailure);
+    }
 
-                        userDto.setId(firebaseUser.getUid());
-                        userDto.setNotificationKey(OneSignal
-                                .getPermissionSubscriptionState()
-                                .getSubscriptionStatus()
-                                .getUserId());
+    private void onAuthSuccess(Task<AuthResult> task) {
+        if (task.isSuccessful()) {
+            Log.i(TAG, "Authentication succeeded");
 
-                        // At this point the phone number is already authenticated.
-                        // Now, register the ID generated through e-SAMU webservice
-                        signUp();
-                    } else {
-                        // Incorrect verification code
-                        tilToken.setError(getString(R.string.signup_error_auth));
-                        progress.dismiss();
-                    }
-                }).addOnFailureListener(e -> {
-                    Log.e(TAG, "Failed to send verification token");
-                    Dialog.alert(
-                            getContext(),
-                            R.string.error_auth,
-                            R.string.signup_error_auth_failure);
-                });
+            // Get user ID created by Firebase and OneSignal
+            FirebaseUser firebaseUser = task.getResult().getUser();
+
+            userDto.setId(firebaseUser.getUid());
+            userDto.setNotificationKey(OneSignal
+                    .getPermissionSubscriptionState()
+                    .getSubscriptionStatus()
+                    .getUserId());
+
+            // At this point the phone number is already authenticated.
+            // Now register the ID generated through e-SAMU webservice
+            signUp();
+        } else {
+            // Incorrect verification code
+            tilToken.setError(getString(R.string.signup_error_auth));
+            tilToken.requestFocus();
+            progress.dismiss();
+        }
+    }
+
+    private void onAuthFailure(Exception e) {
+        Log.e(TAG, "Failed to authenticate verification token", e);
+        Dialog.alert(getContext(), R.string.error_auth, R.string.signup_error_auth_failure);
     }
 
     private void signUp() {
@@ -210,10 +217,8 @@ public class TokenFragment extends Fragment {
                 progress.dismiss();
                 new AlertDialog.Builder(getContext())
                         .setTitle(R.string.error_unreachable_server)
-                        .setPositiveButton(
-                                R.string.dialog_retry, (dialog, button) -> signUp())
-                        .setNegativeButton(
-                                R.string.dialog_cancel, (dialog, button) -> dialog.dismiss())
+                        .setPositiveButton(R.string.dialog_retry, (dialog, button) -> signUp())
+                        .setNegativeButton(R.string.dialog_cancel, (dialog, button) -> dialog.dismiss())
                         .show();
             }
         });

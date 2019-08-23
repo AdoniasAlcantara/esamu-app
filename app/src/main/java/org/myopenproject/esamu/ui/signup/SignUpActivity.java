@@ -14,8 +14,6 @@ import org.myopenproject.esamu.util.Dialog;
 import org.myopenproject.esamu.widget.LockableViewPager;
 
 public class SignUpActivity extends AppCompatActivity implements OnSignUpInteractionListener {
-    private static final String TAG = "SignUp";
-
     // ViewPager index
     private static final int PAGE_INFO = 0;
     private static final int PAGE_PHONE = 1;
@@ -42,6 +40,12 @@ public class SignUpActivity extends AppCompatActivity implements OnSignUpInterac
         pager = findViewById(R.id.signUpPager);
         pager.setSwipeEnabled(false);
         pager.setAdapter(new SingUpAdapter(getSupportFragmentManager()));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 
     @Override
